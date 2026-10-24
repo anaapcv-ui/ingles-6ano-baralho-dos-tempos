@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumo · Baralho dos Tempos · Inglês 6º</title>
+<style>
+  :root{--mesa:#0b1d15;--mesa2:#12291f;--borda:#23453a;--borda2:#33604f;--esp:#5aa9ff;--cop:#ff5a78;--pau:#4ade80;--our:#ffa94d;--cor:#c9a2ff;--ouro:#f2c14e;--verde:#4ade80;--vermelho:#ff5d6c;--texto:#eef5ef;--cinza:#93a89c;--carta:#fbf6ea}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:radial-gradient(1000px 520px at 50% -10%,#1c4a35,#0b1d15 62%),var(--mesa);color:var(--texto);line-height:1.6;padding-bottom:60px;font-size:1.03rem}
+  h1,h2,h3{font-family:Georgia,'Times New Roman',serif}
+  header{background:linear-gradient(120deg,#0f3324,#173f2e);padding:26px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:4px solid var(--ouro)}
+  header .selo{font-size:.78rem;letter-spacing:2px;color:#f6e3a8;text-transform:uppercase}
+  header h1{font-size:1.5rem;margin:6px 0 2px}
+  header p{color:#cfe3d6;font-size:.92rem}
+  .wrap{max-width:860px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--mesa2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--borda)}
+  .barra-nav a.on{background:var(--ouro);color:#2b1d00;font-weight:bold}
+  .barra-nav a.lock{opacity:.5}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--mesa2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--mesa);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .sec{margin:26px 0 10px;display:flex;align-items:center;gap:10px}
+  .sec h2{font-size:1.25rem;color:var(--ouro)}
+  .card{background:var(--mesa2);border:1px solid var(--borda);border-left:6px solid var(--nc,var(--ouro));border-radius:14px;padding:16px;margin-bottom:14px}
+  .card h3{color:var(--nc,var(--ouro));margin-bottom:8px;font-size:1.12rem}
+  .card ul{margin-left:20px} .card li{margin-bottom:5px}
+  .esp{--nc:var(--esp)} .cop{--nc:var(--cop)} .pau{--nc:var(--pau)} .our{--nc:var(--our)} .cor{--nc:var(--cor)}
+  .naipe{font-size:1.4rem}
+  .en{color:#fff3c4;font-style:italic}
+  .som{background:none;border:1px solid var(--borda2);border-radius:6px;padding:0 4px;margin-left:3px;font-size:.78rem;vertical-align:middle;color:var(--texto)}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin:6px 0 4px}
+  th,td{border:1px solid var(--borda2);padding:6px 8px;text-align:left;vertical-align:top}
+  th{background:#173b2e;color:var(--ouro)}
+  .postit{background:#fff1a8;color:#3a2f00;border-radius:4px;padding:12px 14px;margin:10px 0;box-shadow:3px 4px 0 rgba(0,0,0,.35);transform:rotate(-.6deg);font-size:.95rem}
+  .postit b{color:#7a4b00}
+  .alerta{background:#3a1414;border:2px solid var(--vermelho);border-radius:12px;padding:12px 14px;margin:10px 0}
+  .alerta b{color:#ffb3b3}
+  .flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .flip{perspective:900px;height:150px;cursor:pointer}
+  .flip .inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .flip.on .inner{transform:rotateY(180deg)}
+  .flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:.88rem}
+  .flip .frente{background:var(--carta);color:#2a1b4a;border:3px solid var(--cor);font-weight:bold;font-size:1.05rem;font-family:Georgia,serif}
+  .flip .frente small{font-size:.7rem;color:#6a3fb5;font-family:'Segoe UI',sans-serif;font-weight:normal;margin-top:6px}
+  .flip .verso{background:#24173e;color:#efe6ff;border:2px solid var(--cor);transform:rotateY(180deg)}
+  .flip .som{color:#2a1b4a;border-color:#b9a3e0}
+  .escala{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .escala span{background:#0f2219;border:1px solid var(--esp);border-radius:8px;padding:4px 9px}
+  .glos{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;font-size:.9rem}
+  .glos div{background:var(--mesa2);border:1px solid var(--borda);border-radius:10px;padding:8px 10px}
+  .relampago .pq{background:#0f2219;border:1px solid var(--borda2);border-radius:10px;padding:10px;margin:8px 0}
+  .relampago button.op{background:var(--mesa);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 12px;margin:6px 6px 0 0}
+  .relampago button.op.ok{background:#0e2b1f;border-color:var(--verde)}
+  .relampago button.op.no{background:#3a1414;border-color:var(--vermelho)}
+  .relampago .fb{font-size:.88rem;margin-top:6px}
+  .fim{background:linear-gradient(120deg,#122a1f,#163a2a);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:22px;text-align:center}
+  .fim h3{color:#8fe0b4;margin-bottom:8px}
+  .fim button{background:var(--ouro);color:#2b1d00;border:none;border-radius:10px;padding:11px 18px;font-weight:bold;font-size:1rem;margin:6px}
+  .fim button:disabled{background:#1b3329;color:#6f8a7c;cursor:not-allowed}
+  .fim a.btn{display:inline-block;margin:6px;background:var(--verde);color:#04231a;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .fim a.btn.off{background:#1b3329;color:#6f8a7c;pointer-events:none}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(5,10,8,.96);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--mesa2);border:1px solid var(--ouro);border-radius:14px;padding:22px;max-width:440px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal .big{font-size:2.2rem}
+  .modal a,.modal button{display:inline-block;background:var(--ouro);color:#2b1d00;border:none;border-radius:8px;padding:10px 18px;font-weight:bold;text-decoration:none}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Baralho dos Tempos · Inglês 6º ano · CCF</div>
+  <h1>🗺️ Resumo · Manual do Baralho</h1>
+  <p>Os quatro naipes (tempos verbais) e as cartas coringa (vocabulário) numa página só · Prova 27/10</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html">🎯 Quiz</a>
+    <a class="on" href="resumo.html">🗺️ Resumo</a>
+    <a href="simulado.html" data-etapa="simulado">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="painel">
+    <span id="salvo">📏 Rolagem máxima: 0%</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div class="sec"><h2>🃏 O baralho em uma olhada</h2></div>
+  <table>
+    <tr><th>Naipe</th><th>Tempo</th><th>Para quê</th><th>Forma</th><th>Pistas</th></tr>
+    <tr><td class="naipe" style="color:var(--esp)">♠</td><td>Simple Present</td><td>rotinas e hábitos</td><td>verbo base (+ -s/-es com he/she/it)</td><td>always, usually, often, sometimes, never</td></tr>
+    <tr><td class="naipe" style="color:var(--cop)">♥</td><td>Present Progressive</td><td>o que acontece agora</td><td>am/is/are + verbo -ing</td><td>today, at the moment, now</td></tr>
+    <tr><td class="naipe" style="color:var(--pau)">♣</td><td>Simple Past</td><td>ações terminadas no passado</td><td>verbo + -ed (regulares); didn't / Did + verbo base</td><td>in 1989, yesterday, last week, 5,000 years ago</td></tr>
+    <tr><td class="naipe" style="color:var(--our)">♦</td><td>Past Progressive</td><td>atividade em andamento num momento do passado</td><td>was/were + verbo -ing</td><td>yesterday at 9pm, last night at 3am</td></tr>
+  </table>
+  <p style="font-size:.82rem;color:var(--cinza)">Fonte: Reference Book pp. 6, 18, 30 e 46.</p>
+
+  <div class="sec"><h2><span style="color:var(--esp)">♠</span> Simple Present</h2></div>
+  <div class="card esp">
+    <h3>Rotinas e hábitos (p. 6 e p. 46)</h3>
+    <table>
+      <tr><th>+</th><td><span class="en">I play tennis.</span> · <span class="en">He plays tennis.</span> · <span class="en">They play tennis.</span></td></tr>
+      <tr><th>–</th><td><span class="en">I don't play tennis.</span> · <span class="en">He doesn't play tennis.</span> · <span class="en">He doesn't cheat.</span></td></tr>
+      <tr><th>?</th><td><span class="en">Do you play tennis?</span> <span class="en">Yes, I do. No, I don't.</span><br><span class="en">Does he play tennis?</span> <span class="en">Yes, he does. No, he doesn't.</span><br><span class="en">Do they usually win?</span></td></tr>
+    </table>
+    <div class="postit">📌 <b>Dica de prova:</b> he / she / it → verbo com <b>-s ou -es</b>. Mas depois de <b>doesn't</b> e <b>Does</b> o -s some: <i>He doesn't play · Does she play?</i></div>
+  </div>
+  <div class="card esp">
+    <h3>Adverbs of frequency (p. 6)</h3>
+    <div class="escala"><b>100%</b> <span class="en">always</span> → <span class="en">usually</span> → <span class="en">often</span> → <span class="en">sometimes</span> → <span class="en">hardly ever</span> → <span class="en">never</span> <b>0%</b></div>
+    <ul style="margin-top:10px">
+      <li>Vão <b>antes do verbo</b>: <span class="en">We always study hard.</span> <span class="en">I often beat him.</span></li>
+      <li>Mas <b>depois do verbo to be</b>: <span class="en">She is never late.</span></li>
+    </ul>
+    <h3 style="margin-top:12px">Time expressions (p. 6)</h3>
+    <p><span class="en">now</span> · <span class="en">every day</span> · <span class="en">at the moment</span> · <span class="en">twice a week</span> · <span class="en">on the weekend</span> · <span class="en">this year</span> · <span class="en">once a week</span></p>
+    <p>Costumam ir <b>no fim</b> da frase, mas podem ir <b>no começo</b>: <span class="en">We usually chat online twice a week.</span> <span class="en">On Mondays I do volunteer work.</span></p>
+  </div>
+
+  <div class="sec"><h2><span style="color:var(--cop)">♥</span> Present Progressive e o -ing</h2></div>
+  <div class="card cop">
+    <h3>O que está acontecendo agora (p. 6 e p. 46)</h3>
+    <table>
+      <tr><th>+</th><td><span class="en">I'm drawing.</span> · <span class="en">She's drawing.</span> · <span class="en">They're drawing.</span></td></tr>
+      <tr><th>–</th><td><span class="en">I'm not drawing.</span> · <span class="en">He isn't drawing.</span> · <span class="en">You aren't drawing.</span></td></tr>
+      <tr><th>?</th><td><span class="en">Is he drawing?</span> <span class="en">Yes, he is. No, he isn't.</span> · <span class="en">Are they losing?</span></td></tr>
+    </table>
+    <div class="alerta">⚠️ <b>Pegadinha:</b> são duas partes obrigatórias — <b>am/is/are</b> + <b>verbo -ing</b>. “He drawing” e “He is draw” estão errados.</div>
+  </div>
+  <div class="card cop">
+    <h3>Tense review: rotina × agora (p. 46)</h3>
+    <table>
+      <tr><th></th><th>simple present</th><th>present progressive</th></tr>
+      <tr><td>+</td><td><span class="en">I often beat him.</span></td><td><span class="en">I'm beating him.</span></td></tr>
+      <tr><td>–</td><td><span class="en">He doesn't cheat.</span></td><td><span class="en">She isn't winning.</span></td></tr>
+      <tr><td>?</td><td><span class="en">Do they usually win?</span></td><td><span class="en">Are they losing?</span></td></tr>
+    </table>
+    <div class="postit">📌 <b>Ache a pista:</b> always / on Saturdays / every day → <b>simple present</b>. now / at the moment / today → <b>present progressive</b>.</div>
+  </div>
+  <div class="card cop">
+    <h3>Gerunds (p. 6)</h3>
+    <ul>
+      <li>Depois de verbos de gostar / não gostar: <span class="en">He likes playing tennis.</span> <span class="en">She hates going skydiving.</span></li>
+      <li>Depois de preposições: <span class="en">I'm into drawing cartoons.</span> <span class="en">They're interested in reading books.</span> <span class="en">He's good at playing the piano.</span></li>
+    </ul>
+    <div class="alerta">⚠️ <b>Pegadinha:</b> o gerund NÃO é present progressive. Em <i>He likes playing tennis</i>, o verbo principal é <b>likes</b>.</div>
+  </div>
+
+  <div class="sec"><h2><span style="color:var(--pau)">♣</span> Simple Past</h2></div>
+  <div class="card pau">
+    <h3>Verbos regulares: a mesma forma para todos (p. 18)</h3>
+    <p><span class="en">I traveled around Australia.</span> · <span class="en">She traveled around Australia.</span> · <span class="en">They traveled around Australia.</span></p>
+    <table style="margin-top:8px">
+      <tr><th>Regra de spelling</th><th>Exemplo</th></tr>
+      <tr><td>a maioria: + -ed</td><td><span class="en">invent → invented</span></td></tr>
+      <tr><td>terminado em -e: + -d</td><td><span class="en">arrive → arrived</span></td></tr>
+      <tr><td>consoante + y: tira o y, põe -ied</td><td><span class="en">study → studied</span></td></tr>
+      <tr><td>vogal + consoante: + -ed</td><td><span class="en">visit → visited</span></td></tr>
+      <tr><td>vogal tônica + consoante (menos w, x, y): dobra + -ed</td><td><span class="en">stop → stopped</span> · <span class="en">permit → permitted</span></td></tr>
+    </table>
+    <p style="font-size:.85rem;color:var(--cinza)">Verbos irregulares: lista própria no livro (p. 52).</p>
+  </div>
+  <div class="card pau">
+    <h3>Negativa, pergunta e pistas (p. 46)</h3>
+    <table>
+      <tr><th>+</th><td><span class="en">It appeared in 1475.</span> · <span class="en">We played cards last Saturday.</span></td></tr>
+      <tr><th>–</th><td><span class="en">He didn't play Go.</span></td></tr>
+      <tr><th>?</th><td><span class="en">Did she win?</span></td></tr>
+    </table>
+    <p>Pistas: <span class="en">in 1989</span> · <span class="en">yesterday</span> · <span class="en">5,000 years ago</span> · <span class="en">last week</span></p>
+    <div class="postit">📌 <b>Dica de prova:</b> depois de <b>didn't</b> e de <b>Did</b> o verbo volta à forma base: <i>didn't play · Did she win?</i></div>
+  </div>
+
+  <div class="sec"><h2><span style="color:var(--our)">♦</span> Past Progressive</h2></div>
+  <div class="card our">
+    <h3>O que estava acontecendo (p. 30 e p. 46)</h3>
+    <table>
+      <tr><th>+</th><td><span class="en">I was listening.</span> · <span class="en">She was listening.</span> · <span class="en">You were listening.</span> · <span class="en">They were listening.</span></td></tr>
+      <tr><th>–</th><td><span class="en">I wasn't listening.</span> · <span class="en">We weren't listening.</span> · <span class="en">He was not running.</span></td></tr>
+      <tr><th>?</th><td><span class="en">Was he walking?</span> <span class="en">Yes, he was. No, he wasn't.</span><br><span class="en">Were you walking?</span> <span class="en">Yes, you were. No, you weren't.</span><br><span class="en">What were you doing at 9pm on Monday?</span></td></tr>
+    </table>
+    <ul style="margin-top:8px">
+      <li><b>was</b> → I, he, she, it · <b>were</b> → you, we, they</li>
+      <li>Resposta curta <b>sem repetir</b> o -ing: <span class="en">Were you running at 6pm? Yes, I was.</span></li>
+      <li>Pistas: <span class="en">yesterday at 9pm</span> · <span class="en">last night at 3am</span> — <span class="en">I wasn't reading a book yesterday at 9pm.</span></li>
+    </ul>
+  </div>
+  <div class="card our">
+    <h3>♣ + ♦ juntos: when e while (p. 30 e p. 46)</h3>
+    <p><span class="en">I was running to catch the bus when I fell.</span></p>
+    <ul>
+      <li><b>past progressive</b> = a atividade em andamento (<span class="en">I was running to catch the bus</span>)</li>
+      <li><b>simple past</b> = a ação que interrompeu (<span class="en">when I fell</span>)</li>
+      <li><b>when</b> antes do simple past: <span class="en">He was carrying the box when he dropped it.</span></li>
+      <li><b>while</b> antes do past progressive: <span class="en">While he was carrying the box, he dropped it.</span></li>
+    </ul>
+    <div class="postit">📌 <b>Macete:</b> WHILE gruda no pedaço com was/were + -ing. WHEN gruda na ação curta do simple past.</div>
+  </div>
+
+  <div class="sec"><h2><span style="color:var(--cor)">🃏</span> Cartas coringa: vire para ver (p. 45)</h2></div>
+  <div class="card cor">
+    <h3>Playing Games</h3>
+    <div class="flips" id="flips-games"></div>
+  </div>
+  <div class="card cor">
+    <h3>Places to Visit</h3>
+    <div class="flips" id="flips-places"></div>
+  </div>
+
+  <div class="sec"><h2>⚠️ As pegadinhas que mais derrubam</h2></div>
+  <div class="alerta">
+    <b>1.</b> “She play” ✗ → <span class="en">She plays</span> ✓ · <b>2.</b> “He doesn't plays” ✗ → <span class="en">He doesn't play</span> ✓ · <b>3.</b> “She always is late” ✗ → <span class="en">She is always late</span> ✓ · <b>4.</b> “studyed” ✗ → <span class="en">studied</span> ✓ · <b>5.</b> “visitted” ✗ → <span class="en">visited</span> ✓ · <b>6.</b> “He didn't played” ✗ → <span class="en">He didn't play</span> ✓ · <b>7.</b> “They was” ✗ → <span class="en">They were</span> ✓ · <b>8.</b> “Yes, I was running.” na resposta curta → <span class="en">Yes, I was.</span>
+  </div>
+
+  <div class="sec"><h2>📚 Glossário dos termos</h2></div>
+  <div class="glos">
+    <div><b>base form</b>: o verbo “puro” (play, watch).</div>
+    <div><b>-ing</b>: a terminação do present/past progressive e do gerund.</div>
+    <div><b>adverbs of frequency</b>: palavras de frequência (always … never).</div>
+    <div><b>time expressions</b>: expressões de tempo (now, yesterday, twice a week…).</div>
+    <div><b>gerund</b>: verbo com -ing depois de like/hate e de preposições.</div>
+    <div><b>spelling</b>: o jeito de escrever o verbo com -ed.</div>
+    <div><b>short answer</b>: resposta curta (Yes, I do. / No, she wasn't.).</div>
+    <div><b>tense review</b>: revisão dos tempos verbais (Unit 8, p. 46).</div>
+  </div>
+
+  <div class="sec"><h2>⚡ Mini-quiz relâmpago (não vale nota)</h2></div>
+  <div class="card relampago" id="relampago"></div>
+
+  <div class="sec"><h2>✅ Estou preparado?</h2></div>
+  <div class="card"><ul>
+    <li>Sei quando usar cada um dos quatro tempos e acho a pista na frase.</li>
+    <li>Coloco -s/-es com he/she/it, e tiro depois de doesn't/Does.</li>
+    <li>Sei a escala dos advérbios e onde eles ficam na frase.</li>
+    <li>Escrevo o passado regular certo (studied, arrived, stopped, visited).</li>
+    <li>Uso was/were e as respostas curtas sem repetir o -ing.</li>
+    <li>Sei usar when e while.</li>
+    <li>Reconheço as 10 palavras de Playing Games e os 9 Places to Visit.</li>
+  </ul></div>
+
+  <div class="fim" id="fim">
+    <h3 id="fim-h3">🔒 Próxima etapa: Simulado</h3>
+    <p id="fim-txt">Role até aqui e confirme a leitura para destravar o Simulado.</p>
+    <button id="btn-li" onclick="confirmarLeitura()" disabled>✅ Li o resumo até o fim</button>
+    <a class="btn off" id="btn-prox" href="simulado.html">📝 Pronto para o Simulado!</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🃏</div>
+</div>
+
+<div class="modal-bg" id="lock">
+  <div class="modal">
+    <div class="big">🔒</div>
+    <p><b>Esta etapa ainda está trancada.</b></p>
+    <p id="lock-txt">Para abrir o Resumo, envie o Quiz.</p>
+    <a href="index.html">Voltar ao início</a>
+  </div>
+</div>
+<div class="modal-bg" id="modal" style="background:rgba(0,0,0,.75)">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='baralho_tempos_ing6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function marcarNav(){
+  var links=document.querySelectorAll('#nav a[data-etapa]');
+  for(var i=0;i<links.length;i++){ var id=links[i].getAttribute('data-etapa'); if(!podeAbrir(id)){ links[i].classList.add('lock'); links[i].textContent='🔒 '+links[i].textContent.replace('🔒 ',''); } else { links[i].classList.remove('lock'); links[i].textContent=links[i].textContent.replace('🔒 ',''); } }
+}
+function checarTrava(){
+  if(podeAbrir('resumo')) return true;
+  var L=lerJSON(KIT+'_leitura_v1');
+  document.getElementById('lock-txt').textContent=(L&&L.concluido)?'Para abrir o Resumo, envie o Quiz.':'Para abrir o Resumo, conclua a Leitura Guiada e envie o Quiz.';
+  document.getElementById('lock').classList.add('show');
+  document.querySelector('.wrap').style.filter='blur(6px)';
+  return false;
+}
+
+/* ====== ÁUDIO ====== */
+function speak(t){ try{ if(!('speechSynthesis' in window)) return; var u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=0.82; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
+function ligarAudio(raiz){
+  var els=(raiz||document).querySelectorAll('.en');
+  for(var i=0;i<els.length;i++){ (function(el){ if(el.getAttribute('data-som')) return; el.setAttribute('data-som','1'); var b=document.createElement('button'); b.className='som'; b.type='button'; b.title='Ouvir em inglês'; b.textContent='🔊'; var frase=el.textContent; b.addEventListener('click',function(ev){ ev.stopPropagation(); speak(frase); }); el.parentNode.insertBefore(b, el.nextSibling); })(els[i]); }
+}
+
+/* ====== CARTAS CORINGA (p. 45 — significado tirado do que cada foto mostra) ====== */
+var GAMES=[["beat","vencer alguém","a menina comemora; a amiga fica chateada"],["cheat","trapacear","o menino espia com cara de esperto"],["count","contar","crianças contando peças coloridas"],["guess","adivinhar","cartão na testa para adivinhar"],["lose","perder","o menino triste abraça a bola"],["give up","desistir","mãos na cabeça, peças de xadrez caídas"],["miss a turn","perder a vez","jogo de tabuleiro"],["land","parar (cair) numa casa","peça colocada numa casa do tabuleiro"],["move a counter","mover uma peça","mão movendo um pino no tabuleiro"],["roll the die","jogar (rolar) o dado","um dado saindo da mão"]];
+var PLACES=[["art gallery","galeria de arte","quadros e uma escultura"],["campground","área de camping","barracas no gramado"],["fishing port","porto de pesca","barcos parados na água"],["market","mercado (feira)","barracas com objetos à venda"],["monument","monumento","grande escultura de pedra"],["safari park","parque de safári","animais e um jipe"],["statue","estátua","figura de metal no alto de um prédio"],["town square","praça da cidade","praça cercada de prédios antigos"],["water park","parque aquático","piscinas e tobogãs"]];
+function montarFlips(id,lista){
+  var c=document.getElementById(id); var h='';
+  lista.forEach(function(w){ h+='<div class="flip" onclick="this.classList.toggle(\'on\')"><div class="inner"><div class="face frente"><span class="en">'+w[0]+'</span><small>toque para virar</small></div><div class="face verso"><b>'+w[1]+'</b><span style="font-size:.78rem;margin-top:6px">📷 '+w[2]+'</span></div></div></div>'; });
+  c.innerHTML=h;
+}
+
+/* ====== MINI-QUIZ RELÂMPAGO ====== */
+var REL=[
+ {p:"<span class='en'>She ___ (watch) TV now.</span>",ops:["is watching","watches"],ok:0,e:"now → present progressive: is watching."},
+ {p:"<span class='en'>We ___ cards every Saturday.</span>",ops:["are playing","play"],ok:1,e:"every Saturday = rotina → simple present."},
+ {p:"Passado de <span class='en'>permit</span>:",ops:["permited","permitted"],ok:1,e:"Vogal tônica + consoante → dobra o t: permitted."},
+ {p:"<span class='en'>I ___ reading a book yesterday at 9pm.</span>",ops:["was","were"],ok:0,e:"I → was."},
+ {p:"<span class='en'>___ he was carrying the box, he dropped it.</span>",ops:["While","When"],ok:0,e:"While vem antes do past progressive (he was carrying)."}
+];
+function montarRelampago(){
+  var c=document.getElementById('relampago'); var h='';
+  REL.forEach(function(q,i){ h+='<div class="pq"><div>'+(i+1)+'. '+q.p+'</div>'; q.ops.forEach(function(o,k){ h+='<button class="op" id="r'+i+'_'+k+'" onclick="resp('+i+','+k+')">'+o+'</button>'; }); h+='<div class="fb" id="rf'+i+'"></div></div>'; });
+  c.innerHTML=h;
+}
+function resp(i,k){ var q=REL[i]; for(var j=0;j<q.ops.length;j++){ document.getElementById('r'+i+'_'+j).className='op'+(j===q.ok?' ok':(j===k?' no':'')); } document.getElementById('rf'+i).innerHTML=(k===q.ok?'✅ ':'❌ ')+q.e; }
+
+/* ====== ESTADO DO RESUMO ====== */
+var CHAVE=KIT+'_resumo_v1'; var mem={}; var estado=carregar();
+function carregar(){ try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s);}catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); } return {rolagemMax:0}; }
+function salvar(){ var s=JSON.stringify(estado); try{ localStorage.setItem(CHAVE,s);}catch(e){ mem[CHAVE]=s; } document.getElementById('salvo').textContent='📏 Rolagem máxima: '+Math.round(estado.rolagemMax||0)+'%'+(estado.concluido?' · ✅ lido até o fim':''); }
+function medirRolagem(){
+  var h=document.documentElement; var total=h.scrollHeight-h.clientHeight; var pct= total<=0?100:Math.min(100,(window.scrollY||h.scrollTop)/total*100);
+  if(pct>(estado.rolagemMax||0)){ estado.rolagemMax=pct; salvar(); }
+  var b=document.getElementById('btn-li'); if(!estado.concluido && (estado.rolagemMax||0)>=90){ b.disabled=false; }
+}
+function confirmarLeitura(){ if(estado.concluido) return; if((estado.rolagemMax||0)<90) return; estado.concluido=true; estado.concluidoEm=new Date().toISOString(); salvar(); atualizarFim(); }
+function atualizarFim(){
+  var h3=document.getElementById('fim-h3'), txt=document.getElementById('fim-txt'), b=document.getElementById('btn-li'), a=document.getElementById('btn-prox');
+  if(estado.concluido||trilhaLiberada()){ h3.textContent='✅ Resumo lido — Simulado destravado!'; txt.textContent=estado.concluido?'Agora encare a Partida Valendo, como se fosse a prova.':'Trilha liberada pelos pais.'; b.disabled=true; b.textContent=estado.concluido?'✅ Resumo concluído':'✅ Li o resumo até o fim'; a.classList.remove('off'); }
+  else { h3.textContent='🔒 Próxima etapa: Simulado'; txt.textContent=(estado.rolagemMax||0)>=90?'Confirme a leitura para destravar o Simulado.':'Role até o fim da página para habilitar o botão (rolagem: '+Math.round(estado.rolagemMax||0)+'%).'; a.classList.add('off'); }
+  marcarNav();
+}
+function exportar(){ var blob=new Blob([JSON.stringify(estado,null,2)],{type:'application/json'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='resumo_baralho-dos-tempos.json'; a.click(); }
+function importar(ev){ var f=ev.target.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); atualizarFim(); mostrarModal('✅ Progresso importado!',false);}catch(e){ mostrarModal('❌ Arquivo inválido.',false);} }; r.readAsText(f); }
+function pedirZerar(){ mostrarModal('Zerar a rolagem deste Resumo? (Se ele já foi concluído, a conclusão é mantida.)',true,function(){ var c=estado.concluido, ce=estado.concluidoEm; estado={rolagemMax:0}; if(c){ estado.concluido=true; estado.concluidoEm=ce; } salvar(); atualizarFim(); }); }
+function mostrarModal(txt,confirmar,fn){ document.getElementById('modal-txt').innerHTML=txt; document.getElementById('modal').classList.add('show'); document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none'; var ok=document.getElementById('modal-ok'); ok.textContent=confirmar?'Sim, zerar':'Ok'; ok.onclick=function(){ if(fn) fn(); fecharModal(); }; }
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+montarFlips('flips-games',GAMES); montarFlips('flips-places',PLACES); montarRelampago(); ligarAudio(document);
+if(checarTrava()){ salvar(); atualizarFim(); window.addEventListener('scroll',function(){ medirRolagem(); atualizarFim(); }); setTimeout(medirRolagem,300); } else { marcarNav(); }
+</script>
+</body>
+</html>

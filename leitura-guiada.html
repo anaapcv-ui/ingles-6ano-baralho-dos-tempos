@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitura Guiada · Baralho dos Tempos · Inglês 6º</title>
+<style>
+  :root{
+    --mesa:#0b1d15; --mesa2:#12291f; --borda:#23453a; --borda2:#33604f;
+    --esp:#5aa9ff; --cop:#ff5a78; --pau:#4ade80; --our:#ffa94d; --cor:#c9a2ff;
+    --ouro:#f2c14e; --verde:#4ade80; --vermelho:#ff5d6c; --texto:#eef5ef; --cinza:#93a89c; --carta:#fbf6ea;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:
+    radial-gradient(1000px 520px at 50% -10%,#1c4a35,#0b1d15 62%),var(--mesa);
+    color:var(--texto);line-height:1.6;padding-bottom:60px}
+  h1,h2,h3{font-family:Georgia,'Times New Roman',serif}
+  header{background:linear-gradient(120deg,#0f3324,#173f2e);padding:26px 18px;text-align:center;
+    box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:4px solid var(--ouro)}
+  header .selo{font-size:.78rem;letter-spacing:2px;color:#f6e3a8;text-transform:uppercase}
+  header .naipes{font-size:1.3rem;letter-spacing:10px;margin-top:4px}
+  header h1{font-size:1.55rem;margin:4px 0 2px}
+  header p{color:#cfe3d6;font-size:.92rem}
+  .n-esp{color:var(--esp)} .n-cop{color:var(--cop)} .n-pau{color:var(--pau)} .n-our{color:var(--our)} .n-cor{color:var(--cor)}
+  .wrap{max-width:840px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--mesa2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--borda)}
+  .barra-nav a.on{background:var(--ouro);color:#2b1d00;font-weight:bold}
+  .barra-nav a.lock{opacity:.5}
+  .intro{background:var(--mesa2);border:1px solid var(--borda);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:var(--ouro);font-size:1.15rem;margin-bottom:8px}
+  .intro ol{margin:8px 0 0 20px}
+  .legenda{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:.82rem}
+  .legenda span{background:#0d2219;border:1px solid var(--borda2);border-radius:10px;padding:3px 9px}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+    background:var(--mesa2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--mesa);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .bloco{background:var(--mesa2);border:1px solid var(--borda);border-left:6px solid var(--nc,var(--ouro));border-radius:16px;margin-bottom:18px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.35)}
+  .bloco.travado{opacity:.55}
+  .bloco.esp{--nc:var(--esp)} .bloco.cop{--nc:var(--cop)} .bloco.pau{--nc:var(--pau)} .bloco.our{--nc:var(--our)} .bloco.cor{--nc:var(--cor)}
+  .bloco-cab{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(90deg,#14332a,#183b30);border-bottom:1px solid var(--borda)}
+  .minicarta{background:var(--carta);color:var(--nc);width:44px;height:58px;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.5);font-family:Georgia,serif;line-height:1.05}
+  .minicarta .v{font-size:1.05rem} .minicarta .s{font-size:1.3rem}
+  .bloco.esp .minicarta,.bloco.pau .minicarta{color:#1b2a3a}
+  .bloco.esp .minicarta .s{color:#2f6fc0} .bloco.pau .minicarta .s{color:#1f8a4c}
+  .bloco.cop .minicarta{color:#c22045} .bloco.our .minicarta{color:#c2610f} .bloco.cor .minicarta{color:#6a3fb5}
+  .bloco-cab h3{font-size:1.08rem;color:#fff}
+  .bloco-cab .porto{font-size:.7rem;color:var(--cinza);letter-spacing:1px;text-transform:uppercase}
+  .bloco-corpo{padding:16px}
+  .texto p{margin-bottom:10px}
+  .texto ul{margin:0 0 10px 20px}
+  .texto li{margin-bottom:6px}
+  .texto .destaque{color:var(--nc);font-weight:bold}
+  .en{color:#fff3c4;font-style:italic;white-space:normal}
+  .som{background:none;border:1px solid var(--borda2);border-radius:6px;padding:0 4px;margin-left:3px;font-size:.78rem;vertical-align:middle;color:var(--texto)}
+  .som:hover{background:#1d4a39}
+  .quadro{width:100%;border-collapse:collapse;font-size:.88rem;margin:4px 0 12px}
+  .quadro th,.quadro td{border:1px solid var(--borda2);padding:6px 8px;text-align:left;vertical-align:top}
+  .quadro th{background:#173b2e;color:var(--ouro)}
+  .olhar{background:#2e2408;border-left:3px solid var(--ouro);padding:8px 12px;margin:0 0 10px;border-radius:0 8px 8px 0;font-size:.92rem}
+  .olhar b{color:var(--ouro)}
+  .cadeado{padding:22px 16px;text-align:center;color:var(--cinza);font-size:.9rem}
+  .perg{background:#0f2219;border:1px solid var(--borda);border-radius:12px;padding:12px;margin-top:14px}
+  .perg.red{border-color:var(--vermelho);box-shadow:0 0 0 1px var(--vermelho)}
+  .perg .tag{display:inline-block;font-size:.66rem;text-transform:uppercase;letter-spacing:1px;padding:2px 8px;border-radius:10px;margin-bottom:6px}
+  .tag.conc{background:#173a4a;color:#9fd3f0}
+  .tag.apl{background:#1d4530;color:#a7e0bf}
+  .perg label{display:block;font-weight:600;margin-bottom:8px}
+  .perg textarea{width:100%;min-height:70px;background:#081610;color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:9px;font-family:inherit;font-size:.95rem;resize:vertical}
+  .aviso{margin-top:8px;padding:9px 11px;border-radius:8px;font-size:.85rem;display:none}
+  .aviso.amarelo{display:block;background:#4a3d12;border:1px solid var(--ouro);color:#ffe9ad}
+  .aviso.vermelho{display:block;background:#4a1717;border:1px solid var(--vermelho);color:#ffc9c9}
+  .modelo{margin-top:10px;padding:10px 12px;background:#0e2b1f;border:1px solid var(--verde);border-radius:8px;font-size:.9rem;display:none}
+  .modelo.show{display:block}
+  .modelo .lab{color:#8fe0b4;font-weight:bold;font-size:.78rem;text-transform:uppercase;letter-spacing:1px}
+  .chk{margin-top:10px;font-size:.88rem}
+  .chk .item{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
+  .chk .item span{flex:1;min-width:180px}
+  .chk .simnao button{border:1px solid var(--borda2);background:#081610;color:var(--texto);border-radius:6px;padding:4px 10px;margin-left:4px;font-size:.8rem}
+  .chk .simnao button.sim.ativo{background:var(--verde);border-color:var(--verde);color:#04231a}
+  .chk .simnao button.nao.ativo{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
+  .conferir{margin-top:14px;background:var(--ouro);color:#2b1d00;border:none;border-radius:10px;padding:11px 18px;font-size:1rem;font-weight:bold;width:100%}
+  .conferir:disabled{background:#1b3329;color:#6f8a7c;cursor:not-allowed}
+  .status-bloco{margin-top:10px;text-align:center;font-weight:bold;font-size:.95rem}
+  .prox{margin-top:12px;text-align:center}
+  .prox a{color:var(--ouro);text-decoration:none;font-weight:bold}
+  .peg{background:#3a1414;border:2px solid var(--vermelho);border-radius:16px;padding:16px;margin-top:20px}
+  .peg h3{color:#ffb3b3;margin-bottom:10px}
+  .peg ol{margin-left:20px}
+  .peg li{margin-bottom:7px}
+  .cobertura{background:var(--mesa2);border:1px solid var(--borda);border-radius:16px;padding:16px;margin-top:18px}
+  .cobertura h3{color:var(--ouro);margin-bottom:10px}
+  table.cob{width:100%;border-collapse:collapse;font-size:.85rem}
+  table.cob th,table.cob td{border:1px solid var(--borda);padding:7px 9px;text-align:left}
+  table.cob th{background:#173b2e}
+  .revisar{background:#3a2e06;border:2px solid var(--ouro);border-radius:16px;padding:16px;margin-top:18px}
+  .revisar h3{color:var(--ouro);margin-bottom:8px}
+  .revisar ul{margin-left:18px}
+  .relatorio{background:var(--mesa2);border:1px dashed var(--ouro);border-radius:14px;padding:16px;margin-top:18px;font-size:.9rem}
+  .relatorio h3{color:var(--ouro);margin-bottom:8px}
+  .trilha-fim{background:linear-gradient(120deg,#122a1f,#163a2a);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .trilha-fim h3{color:#8fe0b4;margin-bottom:8px}
+  .trilha-fim a.btn{display:inline-block;margin-top:8px;background:var(--verde);color:#04231a;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .trilha-fim a.btn.off{background:#1b3329;color:#6f8a7c;pointer-events:none}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--mesa2);border:1px solid var(--ouro);border-radius:14px;padding:20px;max-width:420px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal button{background:var(--ouro);color:#2b1d00;border:none;border-radius:8px;padding:9px 16px;font-weight:bold}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Baralho dos Tempos · Inglês 6º ano · CCF</div>
+  <div class="naipes"><span class="n-esp">♠</span><span class="n-cop">♥</span><span class="n-pau">♣</span><span class="n-our">♦</span><span class="n-cor">🃏</span></div>
+  <h1>📖 Leitura Guiada · Cartas na Mesa</h1>
+  <p>Avaliação Mensal 2 · Prova 27/10 · Reference Book pp. 6, 18, 30, 45 e 46</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a class="on" href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html" data-etapa="quiz">🎯 Quiz</a>
+    <a href="resumo.html" data-etapa="resumo">🗺️ Resumo</a>
+    <a href="simulado.html" data-etapa="simulado">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="intro">
+    <h2>🃏 Como funciona o Baralho dos Tempos</h2>
+    <p>Neste baralho, <b>cada naipe é um tempo verbal</b> do inglês e as cartas <b>coringa</b> trazem o vocabulário da Unit 8. São <b>12 cartas</b>, e você vira uma de cada vez:</p>
+    <div class="legenda">
+      <span><b class="n-esp">♠</b> Simple Present (cartas 1–3)</span>
+      <span><b class="n-cop">♥</b> Present Progressive e -ing (cartas 4–6)</span>
+      <span><b class="n-pau">♣</b> Simple Past (cartas 7–8)</span>
+      <span><b class="n-our">♦</b> Past Progressive (cartas 9–10)</span>
+      <span><b class="n-cor">🃏</b> Coringas: Playing Games e Places to Visit (cartas 11–12)</span>
+    </div>
+    <ol>
+      <li>Leia a carta com calma. Tudo vem das páginas do seu livro (o número da página está no topo da carta).</li>
+      <li>Toque no 🔊 para ouvir as frases em inglês.</li>
+      <li>Responda as 3 perguntas <b>escrevendo com as suas palavras</b>. Não vale copiar do texto.</li>
+      <li>Clique em <b>Conferir</b>: aparecem a resposta-modelo e uma autoavaliação Sim/Não.</li>
+      <li>Com as 12 cartas conferidas e a autoavaliação respondida, o <b>🎯 Quiz destrava</b>.</li>
+    </ol>
+  </div>
+
+  <div class="painel">
+    <span id="salvo">💾 Progresso salvo automaticamente.</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div id="blocos"></div>
+
+  <div class="peg">
+    <h3>⚠️ 12 Pegadinhas da Prova (não caia nelas!)</h3>
+    <ol>
+      <li><b>He / she / it no simple present = verbo com -s ou -es:</b> <span class="en">She plays tennis.</span> Esquecer o -s é o erro mais comum.</li>
+      <li><b>Depois de doesn't e de Does o verbo NÃO tem -s:</b> <span class="en">He doesn't play.</span> / <span class="en">Does he play?</span> (nunca “doesn't plays”).</li>
+      <li><b>Advérbio de frequência:</b> vai ANTES do verbo (<span class="en">I usually play</span>), mas DEPOIS do verbo to be (<span class="en">She is never late</span>).</li>
+      <li><b>Hardly ever</b> fica entre <i>sometimes</i> e <i>never</i> na escala do livro — é bem perto de 0%.</li>
+      <li><b>Present progressive precisa das duas partes:</b> be (am/is/are) + verbo com -ing. “He drawing” ou “He is draw” estão errados.</li>
+      <li><b>Nem todo -ing é present progressive:</b> em <span class="en">He likes playing tennis</span> o verbo principal é <i>likes</i>; <i>playing</i> é o gerund.</li>
+      <li><b>Passado regular é igual para todas as pessoas:</b> <span class="en">She traveled</span> — no passado não existe -s do he/she/it.</li>
+      <li><b>Spelling:</b> study → studied (consoante + y) · arrive → arrived (+ d) · visit → visited (não dobra) · stop → stopped (dobra).</li>
+      <li><b>Depois de didn't e de Did o verbo volta à forma base:</b> <span class="en">He didn't play Go.</span> / <span class="en">Did she win?</span></li>
+      <li><b>was × were:</b> was com I, he, she, it; were com you, we, they.</li>
+      <li><b>Resposta curta não repete o -ing:</b> <span class="en">Were you running at 6pm? Yes, I was.</span></li>
+      <li><b>when × while:</b> <i>when</i> vem antes do simple past (a ação que interrompe); <i>while</i> vem antes do past progressive (a atividade em andamento).</li>
+    </ol>
+  </div>
+
+  <div class="cobertura">
+    <h3>🧭 Cobertura: Tópico → Carta</h3>
+    <table class="cob">
+      <thead><tr><th>Tópico do comunicado</th><th>Página (Reference Book)</th><th>Carta</th></tr></thead>
+      <tbody>
+        <tr><td>Simple Present: uso, forma, -s/-es</td><td>6 e 46</td><td>1</td></tr>
+        <tr><td>Simple Present: negativa, perguntas e respostas curtas</td><td>6 e 46</td><td>2</td></tr>
+        <tr><td>Adverbs of frequency e time expressions do presente</td><td>6 e 46</td><td>3</td></tr>
+        <tr><td>Present Progressive: forma, negativa e pergunta</td><td>6 e 46</td><td>4</td></tr>
+        <tr><td>Tense review: Simple Present × Present Progressive</td><td>46</td><td>5</td></tr>
+        <tr><td>Gerunds (-ing depois de like/hate e de preposições)</td><td>6</td><td>6</td></tr>
+        <tr><td>Simple Past: verbos regulares e spelling</td><td>18 e 46</td><td>7</td></tr>
+        <tr><td>Simple Past: didn't, Did e time expressions</td><td>46</td><td>8</td></tr>
+        <tr><td>Past Progressive: forma, negativa, perguntas</td><td>30 e 46</td><td>9</td></tr>
+        <tr><td>Simple Past × Past Progressive (when / while)</td><td>30 e 46</td><td>10</td></tr>
+        <tr><td>Playing Games (vocabulário)</td><td>45</td><td>11</td></tr>
+        <tr><td>Places to Visit (vocabulário)</td><td>45</td><td>12</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="revisar" id="revisar" style="display:none">
+    <h3>🔁 Para revisar antes da prova</h3>
+    <ul id="revisar-lista"></ul>
+  </div>
+
+  <div class="relatorio">
+    <h3>📊 Para os pais (resumo desta leitura)</h3>
+    <div id="rel-conteudo">Conforme as cartas forem sendo conferidas, o resumo aparece aqui.</div>
+  </div>
+
+  <div class="trilha-fim" id="trilha-fim">
+    <h3>🔒 Próxima etapa: Quiz</h3>
+    <p id="trilha-fim-txt">O Quiz destrava quando as 12 cartas estiverem conferidas e a autoavaliação respondida.</p>
+    <a class="btn off" id="btn-prox" href="quiz.html">🎯 Ir para o Quiz</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🃏 Boa partida e boa prova!</div>
+</div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button onclick="fecharModal()" id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='baralho_tempos_ing6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function marcarNav(){
+  var links=document.querySelectorAll('#nav a[data-etapa]');
+  for(var i=0;i<links.length;i++){ var id=links[i].getAttribute('data-etapa'); if(!podeAbrir(id)){ links[i].classList.add('lock'); links[i].textContent='🔒 '+links[i].textContent.replace('🔒 ',''); links[i].setAttribute('title','Ainda trancado'); } else { links[i].classList.remove('lock'); links[i].textContent=links[i].textContent.replace('🔒 ',''); } }
+}
+
+/* ====== ÁUDIO (voz do navegador · inglês) ====== */
+function speak(t){ try{ if(!('speechSynthesis' in window)) return; var u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=0.82; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} }
+function ligarAudio(raiz){
+  var els=(raiz||document).querySelectorAll('.en');
+  for(var i=0;i<els.length;i++){ (function(el){ if(el.getAttribute('data-som')) return; el.setAttribute('data-som','1'); var b=document.createElement('button'); b.className='som'; b.type='button'; b.title='Ouvir em inglês'; b.textContent='🔊'; var frase=el.textContent; b.addEventListener('click',function(){ speak(frase); }); el.parentNode.insertBefore(b, el.nextSibling); })(els[i]); }
+}
+/* [[texto]] vira frase em inglês com áudio */
+function enHTML(s){ return s.replace(/\[\[(.+?)\]\]/g,"<span class='en'>$1</span>"); }
+
+/* ====== AS 12 CARTAS (conteúdo SÓ das fotos do Reference Book: pp. 6, 18, 30, 45 e 46) ====== */
+var BLOCOS = [
+ {
+  porto:"Carta 1 · Unit 1 · p. 6 (e Unit 8 · p. 46)", v:"1", s:"♠", u:"esp",
+  titulo:"Simple Present: hábitos e rotinas",
+  texto:[
+   "Usamos o <span class='destaque'>simple present</span> para falar de <b>hábitos e rotinas</b>: aquilo que a gente faz sempre, toda semana, todo sábado. Exemplo do livro (Unit 8): [[I play cards with my friends on Saturdays.]]",
+   "Ele é formado com a <b>forma base</b> do verbo (o verbo “puro”, como [[play]] e [[watch]]). Com <b>I, you, we, they</b> o verbo fica igual: [[I play tennis.]] [[You play tennis.]] [[We play tennis.]] [[They play tennis.]]",
+   "Com <b>he, she, it</b> acrescentamos <span class='destaque'>-s</span> ou <span class='destaque'>-es</span> ao verbo: [[He plays tennis.]] [[She plays tennis.]] [[It plays tennis.]]",
+   "<div class='olhar'><b>Olhar de prova:</b> sujeito he, she ou it (ou uma pessoa só: my friend, my sister) = verbo com -s/-es no simple present. Esquecer o -s é o erro nº 1.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Para que serve o simple present? E o que muda no verbo quando o sujeito é he, she ou it?",modelo:"Serve para falar de hábitos e rotinas (o que fazemos sempre). Com he, she ou it, o verbo ganha -s ou -es (ex.: he plays).",chk:["Disse que é para hábitos e rotinas?","Disse que com he/she/it o verbo ganha -s ou -es?"]},
+   {tag:"apl",q:"Escreva em inglês uma frase SUA, no simple present, sobre algo que você faz todo fim de semana (comece com I). Depois reescreva a mesma ideia começando com “My friend…”.",modelo:"Ex.: I play video games on Saturdays. → My friend plays video games on Saturdays. (Com “my friend”, que é he/she, o verbo ganha -s.)",chk:["Usei o verbo na forma base com I?","Com “My friend” coloquei -s/-es no verbo?"]},
+   {tag:"apl",q:"Um colega escreveu: “She play tennis every day.” Corrija a frase e explique o erro.",modelo:"O certo é “She plays tennis every day.” Com she, o verbo no simple present ganha -s.",chk:["Escrevi “plays”?","Expliquei que o -s é por causa do she (he/she/it)?"]}
+  ]
+ },
+ {
+  porto:"Carta 2 · Unit 1 · p. 6 (e Unit 8 · p. 46)", v:"2", s:"♠", u:"esp",
+  titulo:"Simple Present: negativa, pergunta e resposta curta",
+  texto:[
+   "Na <b>negativa</b>, com I, you, we, they, usamos <span class='destaque'>do not (don't)</span> + o verbo: [[I don't play tennis.]] [[They don't play tennis.]]",
+   "Com <b>he, she, it</b> usamos <span class='destaque'>does not (doesn't)</span> + o verbo <b>sem -s ou -es</b>: [[He doesn't play tennis.]] Na Unit 8 aparece: [[He doesn't cheat.]]",
+   "Na <b>pergunta</b>, <b>Do</b> ou <b>Does</b> vão para o começo, e a resposta curta repete do/does:<ul><li>[[Do you play tennis?]] — [[Yes, I do.]] / [[No, I don't.]]</li><li>[[Does he play tennis?]] — [[Yes, he does.]] / [[No, he doesn't.]]</li><li>[[Do we play tennis?]] — [[Yes, we do.]] / [[No, we don't.]]</li></ul>Na Unit 8: [[Do they usually win?]]",
+   "<div class='olhar'><b>Olhar de prova:</b> quando aparece <b>doesn't</b> ou <b>Does</b>, o verbo volta para a forma base: He doesn't <b>play</b> / Does she <b>play</b>? Nunca “doesn't plays”.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Quando usamos don't e quando usamos doesn't? E como fica o verbo depois de doesn't?",modelo:"Don't com I, you, we, they; doesn't com he, she, it. Depois de doesn't o verbo fica sem -s/-es (forma base).",chk:["Liguei don't a I/you/we/they e doesn't a he/she/it?","Disse que depois de doesn't o verbo fica sem -s?"]},
+   {tag:"apl",q:"Transforme em negativa e depois em pergunta: “Your sister plays cards.”",modelo:"Negativa: Your sister doesn't play cards. Pergunta: Does your sister play cards?",chk:["Usei doesn't + play (sem -s)?","Comecei a pergunta com Does e deixei play sem -s?"]},
+   {tag:"apl",q:"Responda com resposta curta, uma vez “Yes” e outra “No”: (a) “Do they play cards?” (b) “Does she play cards?”",modelo:"(a) Yes, they do. / No, they don't. (b) Yes, she does. / No, she doesn't.",chk:["Usei do/don't para they?","Usei does/doesn't para she?"]}
+  ]
+ },
+ {
+  porto:"Carta 3 · Unit 1 · p. 6 (e Unit 8 · p. 46)", v:"3", s:"♠", u:"esp",
+  titulo:"Adverbs of frequency e time expressions",
+  texto:[
+   "Os <span class='destaque'>adverbs of frequency</span> dizem <b>com que frequência</b> algo acontece. O livro mostra uma escala do 100% ao 0%: [[always]] → [[usually]] → [[often]] → [[sometimes]] → [[hardly ever]] → [[never]].",
+   "Posição: eles vão <b>antes do verbo</b>, mas <b>depois do verbo to be</b>. Exemplos do livro: [[We always study hard.]] [[She never does homework on the weekend.]] [[I often beat him.]] Com o to be, o advérbio vem depois de am/is/are (por exemplo: [[She is never late.]]).",
+   "As <span class='destaque'>time expressions</span> (expressões de tempo), como [[once a week]], [[every day]], [[twice a week]], [[on the weekend]], [[this year]], [[now]] e [[at the moment]], <b>costumam ir no fim da frase</b>, mas <b>também podem ir no começo</b>: [[We usually chat online twice a week.]] [[On Mondays I do volunteer work.]]",
+   "<div class='olhar'><b>Olhar de prova:</b> na Unit 8 (p. 46) o livro liga always, usually, often, sometimes e never ao <b>simple present</b>.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Pense na escala do livro (100% a 0%). Qual advérbio fica logo antes de never? Qual fica entre usually e sometimes? E quem acontece mais vezes: sometimes ou hardly ever?",modelo:"Logo antes de never fica hardly ever. Entre usually e sometimes fica often. Sometimes acontece mais vezes que hardly ever (hardly ever é quase nunca).",chk:["Respondi hardly ever e often?","Disse que sometimes acontece mais vezes que hardly ever?"]},
+   {tag:"apl",q:"Coloque o advérbio no lugar certo e explique por quê: (a) “I play cards.” (usually) (b) “He is late.” (never)",modelo:"(a) I usually play cards. — o advérbio vai antes do verbo (play). (b) He is never late. — com o verbo to be (is), o advérbio vai depois.",chk:["Coloquei usually antes de play?","Coloquei never depois de is?"]},
+   {tag:"apl",q:"Escreva duas frases verdadeiras sobre você: uma com uma time expression no FIM e outra com uma time expression no COMEÇO.",modelo:"Ex.: I play soccer twice a week. / On Saturdays I visit my grandmother.",chk:["Uma frase tem a expressão de tempo no fim?","A outra tem a expressão de tempo no começo?"]}
+  ]
+ },
+ {
+  porto:"Carta 4 · Unit 1 · p. 6 (e Unit 8 · p. 46)", v:"4", s:"♥", u:"cop",
+  titulo:"Present Progressive: o que está acontecendo agora",
+  texto:[
+   "Usamos o <span class='destaque'>present progressive</span> para descrever <b>o que está acontecendo no momento</b>, agora.",
+   "Forma: <b>be (am / is / are) + verbo + -ing</b>. [[I'm drawing.]] [[You're drawing.]] [[He's drawing.]] [[She's drawing.]] [[We're drawing.]] [[They're drawing.]]",
+   "<b>Negativa:</b> o <b>not</b> entra depois do be: [[I'm not drawing.]] [[You aren't drawing.]] [[He isn't drawing.]] [[They aren't drawing.]]",
+   "<b>Pergunta:</b> o be vai para o começo: [[Is he drawing?]] — [[Yes, he is.]] / [[No, he isn't.]] Na Unit 8: [[Are they losing?]] e [[She isn't winning.]]",
+   "<div class='olhar'><b>Olhar de prova:</b> são DUAS partes obrigatórias — o be (am/is/are) e o verbo com -ing. Faltou uma, a frase está errada.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Para que serve o present progressive e quais são as duas partes que formam esse tempo?",modelo:"Serve para dizer o que está acontecendo agora, no momento. É formado por be (am/is/are) + verbo com -ing.",chk:["Disse que é para o que está acontecendo agora?","Citei be (am/is/are) + verbo com -ing?"]},
+   {tag:"apl",q:"Imagine a sua casa agora e escreva duas frases no present progressive sobre alguém de lá: uma afirmativa e uma negativa.",modelo:"Ex.: My mother is cooking. / My brother isn't sleeping.",chk:["Usei am/is/are + verbo com -ing?","Na negativa usei not depois do be (isn't / aren't / 'm not)?"]},
+   {tag:"apl",q:"Transforme em pergunta e dê a resposta curta negativa: “She is watching TV.”",modelo:"Is she watching TV? — No, she isn't.",chk:["Comecei a pergunta com Is?","Respondi No, she isn't?"]}
+  ]
+ },
+ {
+  porto:"Carta 5 · Unit 8 · p. 46 (Tense Review)", v:"5", s:"♥", u:"cop",
+  titulo:"Tense review: Simple Present × Present Progressive",
+  texto:[
+   "Na Unit 8 o livro faz a <span class='destaque'>tense review</span> (revisão dos tempos). Compare lado a lado:",
+   "<table class='quadro'><tr><th></th><th>simple present (rotina)</th><th>present progressive (agora)</th></tr><tr><td>+</td><td>[[I often beat him.]]</td><td>[[I'm beating him.]]</td></tr><tr><td>–</td><td>[[He doesn't cheat.]]</td><td>[[She isn't winning.]]</td></tr><tr><td>?</td><td>[[Do they usually win?]]</td><td>[[Are they losing?]]</td></tr></table>",
+   "<b>Simple present</b> = rotinas e hábitos: [[I play cards with my friends on Saturdays.]] <b>Present progressive</b> = atividades acontecendo agora: [[We're playing Monopoly now.]]",
+   "As pistas de tempo ajudam a escolher: com o <b>present progressive</b>, o livro usa [[today]], [[at the moment]], [[now]] — [[You are reading a good book at the moment.]] Com o <b>simple present</b>: [[always]], [[usually]], [[often]], [[sometimes]], [[never]].",
+   "<div class='olhar'><b>Olhar de prova:</b> procure a PISTA na frase. Frequência ou rotina (always, on Saturdays) → simple present. now / at the moment / today → present progressive.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Qual é a diferença de sentido entre “I often beat him” e “I'm beating him”?",modelo:"“I often beat him” está no simple present: é algo que acontece com frequência (hábito). “I'm beating him” está no present progressive: está acontecendo agora, nesta partida.",chk:["Disse que a primeira é hábito/frequência (simple present)?","Disse que a segunda está acontecendo agora (present progressive)?"]},
+   {tag:"apl",q:"Complete com o tempo certo e diga qual é a pista: (a) “They ___ (play) cards at the moment.” (b) “He ___ (play) cards every Saturday.”",modelo:"(a) are playing — pista: at the moment (present progressive). (b) plays — pista: every Saturday, uma rotina (simple present, com -s por causa do he).",chk:["Escrevi are playing e plays?","Apontei as pistas (at the moment / every Saturday)?"]},
+   {tag:"apl",q:"Escreva duas frases suas sobre um jogo: uma sobre o que você costuma fazer (rotina) e outra sobre o que está acontecendo agora numa partida imaginada.",modelo:"Ex.: I usually win at cards. / Now my sister is winning the game.",chk:["Uma frase está no simple present (rotina)?","A outra está no present progressive (be + -ing)?"]}
+  ]
+ },
+ {
+  porto:"Carta 6 · Unit 1 · p. 6 (Gerunds)", v:"6", s:"♥", u:"cop",
+  titulo:"Gerunds: o -ing depois de gostar e de preposições",
+  texto:[
+   "O <span class='destaque'>gerund</span> é o verbo na forma <b>-ing</b> usado em dois casos, segundo o livro:",
+   "<b>1) Depois de verbos de gostar ou não gostar</b> (preference verbs): [[He likes playing tennis.]] [[She hates going skydiving.]]",
+   "<b>2) Depois de preposições</b>: [[I'm into drawing cartoons.]] [[They're interested in reading books.]] [[He's good at playing the piano.]] Também na negativa ou com o contrário: [[I'm not into drawing cartoons.]] [[He's bad at playing the piano.]]",
+   "<div class='olhar'><b>Olhar de prova:</b> esse -ing NÃO é present progressive. Em “He likes playing tennis”, o verbo principal é <b>likes</b> (simple present, com -s). O <b>playing</b> é só o gerund que vem depois.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Em que dois casos o livro diz que usamos o gerund (-ing)?",modelo:"Depois de verbos de gostar/não gostar (como like e hate) e depois de preposições (como into, in, at).",chk:["Citei os verbos de gostar/não gostar?","Citei as preposições?"]},
+   {tag:"apl",q:"Escreva duas frases verdadeiras sobre você: uma com “I like…” ou “I hate…” e outra com “I'm good at…” ou “I'm bad at…”, usando o gerund.",modelo:"Ex.: I hate getting up early. / I'm good at drawing.",chk:["Usei verbo + -ing depois de like/hate?","Usei verbo + -ing depois de at?"]},
+   {tag:"apl",q:"Um colega disse que “They're interested in reading books” está no present progressive, porque tem are e um verbo com -ing. Ele está certo? Explique.",modelo:"Não está certo. O are faz parte de “they're interested” (estão interessados). O reading aparece logo depois da preposição in, então é um gerund, e não present progressive.",chk:["Disse que NÃO é present progressive?","Expliquei que reading vem depois da preposição in (gerund)?"]}
+  ]
+ },
+ {
+  porto:"Carta 7 · Unit 3 · p. 18 (e Unit 8 · p. 46)", v:"7", s:"♣", u:"pau",
+  titulo:"Simple Past: verbos regulares e o spelling do -ed",
+  texto:[
+   "Usamos o <span class='destaque'>simple past</span> para <b>ações ou situações terminadas no passado</b> (p. 46): [[We played cards last Saturday and I won.]]",
+   "Nos <b>verbos regulares</b>, a afirmativa é <b>igual para todas as pessoas</b>: [[I traveled around Australia.]] [[He traveled around Australia.]] [[We traveled around Australia.]] [[They traveled around Australia.]] Nada de -s no he/she/it.",
+   "<b>Regras de escrita (spelling) da p. 18:</b><ul><li>a maioria dos verbos: <b>+ -ed</b> → [[invent → invented]]</li><li>terminados em <b>-e</b>: <b>+ -d</b> → [[arrive → arrived]]</li><li><b>consoante + y</b>: tira o y e põe <b>-ied</b> → [[study → studied]]</li><li><b>vogal + consoante</b>: <b>+ -ed</b> → [[visit → visited]]</li><li><b>vogal tônica (forte) + consoante</b> (menos w, x ou y): <b>dobra</b> a última consoante e põe -ed → [[stop → stopped]], [[permit → permitted]]</li></ul>",
+   "<div class='olhar'><b>Olhar de prova:</b> visit e stop terminam os dois em vogal + consoante, mas só stop dobra (stopped), porque a vogal forte está no fim. Os verbos irregulares têm lista própria no livro (p. 52).</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"No simple past afirmativo dos verbos regulares, o verbo muda quando o sujeito é he ou she? Explique.",modelo:"Não muda: é a mesma forma com -ed para todas as pessoas (I traveled, she traveled, they traveled). No passado não existe o -s do he/she/it.",chk:["Disse que a forma é a mesma para todas as pessoas?","Disse que não tem -s no passado?"]},
+   {tag:"apl",q:"Escreva o simple past e diga qual regra usou: study, arrive, stop, invent.",modelo:"studied (consoante + y → -ied); arrived (termina em -e → + d); stopped (vogal tônica + consoante → dobra o p e põe -ed); invented (a maioria → + ed).",chk:["Escrevi studied, arrived, stopped e invented?","Expliquei a regra de pelo menos três deles?"]},
+   {tag:"apl",q:"Um colega escreveu: “Yesterday I studyed and I stoped at 9.” Corrija os dois verbos e explique cada correção.",modelo:"O certo é studied: study termina com uma consoante seguida de y, então o y vira i e entra o -ed. E o certo é stopped: em stop a vogal forte vem antes do p, então o p fica dobrado antes do -ed.",chk:["Corrigi para studied e stopped?","Expliquei as duas regras?"]}
+  ]
+ },
+ {
+  porto:"Carta 8 · Unit 8 · p. 46", v:"8", s:"♣", u:"pau",
+  titulo:"Simple Past: didn't, Did e as expressões do passado",
+  texto:[
+   "No quadro da Unit 8, a <b>negativa</b> do simple past usa <span class='destaque'>didn't</span> + o verbo na forma base: [[He didn't play Go.]] A <b>pergunta</b> começa com <span class='destaque'>Did</span>: [[Did she win?]] Afirmativa do mesmo quadro: [[It appeared in 1475.]]",
+   "Repare no quadro: depois de didn't e de Did, o verbo aparece na <b>forma base</b> (play, win), sem -ed.",
+   "<b>Time expressions do simple past</b> (p. 46): [[in 1989]], [[yesterday]], [[5,000 years ago]], [[last week]]. Exemplos do livro: [[My teacher was born in 1982.]] [[I went to the movies yesterday.]] [[They played soccer last week.]]",
+   "<div class='olhar'><b>Olhar de prova:</b> yesterday, last week, last Saturday, … ago, in + ano → pista de simple past.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Pelo quadro da Unit 8, como se faz a negativa e a pergunta do simple past?",modelo:"Para negar, coloco didn't antes do verbo e deixo o verbo sem -ed (ex.: She didn't visit). Para perguntar, começo com Did, depois a pessoa e o verbo sem -ed (ex.: Did you watch?).",chk:["Citei didn't + verbo na forma base?","Citei Did no começo da pergunta?"]},
+   {tag:"apl",q:"Transforme em negativa e depois em pergunta: “They visited the market.”",modelo:"They didn't visit the market. / Did they visit the market?",chk:["Usei didn't + visit (sem -ed)?","Usei Did + they + visit?"]},
+   {tag:"apl",q:"Escreva duas frases suas no simple past com verbos regulares: uma com “yesterday” e outra com “last week”.",modelo:"Ex.: I watched a movie yesterday. / We visited my grandparents last week.",chk:["Usei verbos com -ed?","Usei yesterday e last week?"]}
+  ]
+ },
+ {
+  porto:"Carta 9 · p. 30 (e Unit 8 · p. 46)", v:"9", s:"♦", u:"our",
+  titulo:"Past Progressive: o que estava acontecendo",
+  texto:[
+   "O <span class='destaque'>past progressive</span> descreve <b>atividades em andamento num momento específico do passado</b>: [[They were walking to school at 7:30 this morning.]] [[We were playing cards at 7:30pm.]]",
+   "Forma: <b>sujeito + was / were + verbo + -ing</b>. <b>was</b> com I, he, she, it; <b>were</b> com you, we, they: [[I was listening.]] [[You were listening.]] [[She was listening.]] [[We were listening.]] [[They were listening.]]",
+   "<b>Negativa:</b> usamos <b>not</b>: was not = [[wasn't]], were not = [[weren't]]. [[He was not running.]] / [[He wasn't running.]] [[You weren't listening.]]",
+   "<b>Perguntas:</b> was / were vão <b>antes do sujeito</b>: [[What were you doing at 9pm on Monday?]] [[Was he walking?]] — [[Yes, he was.]] / [[No, he wasn't.]] Na resposta curta <b>não repetimos o verbo com -ing</b>: [[Were you running at 6pm?]] — [[Yes, I was.]]",
+   "Expressões do past progressive (p. 46): [[yesterday at 9pm]], [[last night at 3am]] — [[I wasn't reading a book yesterday at 9pm.]]"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Quando usamos was e quando usamos were no past progressive? O que vem depois deles?",modelo:"Uma pessoa só (I, he, she, it) pede was; you e mais de uma pessoa (we, they) pedem were. Logo depois entra o verbo terminado em -ing (ex.: we were eating).",chk:["Liguei was a I/he/she/it e were a you/we/they?","Disse que depois vem o verbo com -ing?"]},
+   {tag:"apl",q:"Escreva o que você estava fazendo ontem às 9 da noite (yesterday at 9pm) e uma coisa que você NÃO estava fazendo nessa hora.",modelo:"Ex.: I was watching TV yesterday at 9pm. I wasn't studying.",chk:["Usei was + verbo com -ing?","Na negativa usei wasn't?"]},
+   {tag:"apl",q:"Dê as respostas curtas, sem repetir o verbo com -ing: (a) “Were they playing cards?” (sim) (b) “Was she walking?” (não)",modelo:"(a) Yes, they were. (b) No, she wasn't.",chk:["Respondi Yes, they were?","Respondi No, she wasn't, sem repetir walking?"]}
+  ]
+ },
+ {
+  porto:"Carta 10 · p. 30 (e Unit 8 · p. 46)", v:"10", s:"♦", u:"our",
+  titulo:"Simple Past + Past Progressive juntos: when e while",
+  texto:[
+   "Muitas vezes os dois tempos aparecem <b>na mesma frase</b>: [[I was running to catch the bus when I fell.]]",
+   "O <span class='destaque'>past progressive</span> mostra a atividade que <b>estava em andamento</b> ([[I was running to catch the bus…]]). O <span class='destaque'>simple past</span> mostra a ação que <b>interrompeu</b> essa atividade ([[…when I fell.]]).",
+   "Normalmente usamos <b>when</b> antes do simple past e <b>while</b> antes do past progressive:<ul><li>[[He was carrying the box when he dropped it.]]</li><li>[[While he was carrying the box, he dropped it.]]</li><li>[[When our teacher arrived, we were playing cards.]]</li><li>[[While we were playing cards, our teacher arrived.]]</li></ul>",
+   "<div class='olhar'><b>Macete:</b> WHILE gruda no pedaço com was/were + -ing (a atividade longa). WHEN gruda no pedaço do simple past (a ação curta que interrompe).</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Numa frase com os dois tempos, qual deles mostra a atividade em andamento e qual mostra a ação que interrompeu?",modelo:"O past progressive (was/were + -ing) mostra a atividade em andamento; o simple past mostra a ação que interrompeu.",chk:["Liguei o past progressive à atividade em andamento?","Liguei o simple past à ação que interrompeu?"]},
+   {tag:"apl",q:"Complete com when ou while e explique: (a) “___ we were playing cards, my mother arrived.” (b) “I was studying ___ my friend called.”",modelo:"(a) While — vem antes do past progressive (we were playing). (b) when — vem antes do simple past (called).",chk:["Escrevi While na (a) e when na (b)?","Expliquei pela regra (while + past progressive / when + simple past)?"]},
+   {tag:"apl",q:"Crie uma frase sua com os dois tempos: algo que você estava fazendo e que foi interrompido (use when ou while).",modelo:"Ex.: I was watching TV when my dad arrived. / While I was walking to school, it started to rain.",chk:["Usei was/were + -ing para a atividade?","Usei o simple past para a interrupção, com when ou while?"]}
+  ]
+ },
+ {
+  porto:"Carta 11 · Coringa · Unit 8 · p. 45 (Picture It!)", v:"🃏", s:"", u:"cor",
+  titulo:"Playing Games: o vocabulário dos jogos",
+  texto:[
+   "Na página <b>Picture It!</b> da Unit 8, cada palavra de <span class='destaque'>Playing Games</span> vem com uma foto. Veja o que cada foto mostra:",
+   "<ul><li>[[beat]] — vencer alguém: a menina comemora com os braços para cima e a amiga fica chateada.</li><li>[[cheat]] — trapacear: a menina segura as cartas e o menino ao lado faz cara de esperto.</li><li>[[count]] — contar: crianças contando peças coloridas.</li><li>[[guess]] — adivinhar: crianças com um cartão na testa tentando adivinhar.</li><li>[[lose]] — perder: o menino, triste, abraça a bola.</li><li>[[give up]] — desistir: um homem com as mãos na cabeça, ao lado de peças de xadrez caídas.</li><li>[[miss a turn]] — perder a vez: um jogo de tabuleiro.</li><li>[[land]] — parar (cair) numa casa: a mão põe a peça numa casa do tabuleiro de damas.</li><li>[[move a counter]] — mover uma peça (pino) no tabuleiro.</li><li>[[roll the die]] — jogar (rolar) o dado: um dado vermelho saindo da mão.</li></ul>",
+   "Essas palavras aparecem na tense review da p. 46: [[I often beat him.]] [[He doesn't cheat.]] [[Are they losing?]] [[She isn't winning.]]",
+   "<div class='olhar'><b>Olhar de prova:</b> <b>beat</b> é o contrário de <b>lose</b> (vencer × perder). E várias são expressões de mais de uma palavra: give up, miss a turn, move a counter, roll the die.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Qual é a diferença entre “beat” e “lose”? Use as fotos do livro para explicar.",modelo:"Beat é vencer alguém (ganhar de alguém) — na foto, a menina comemora. Lose é perder — na foto, o menino está triste com a bola.",chk:["Disse que beat é vencer/ganhar de alguém?","Disse que lose é perder?"]},
+   {tag:"apl",q:"Descreva em inglês, no simple present e começando com I, uma jogada num jogo de tabuleiro, usando pelo menos duas expressões do livro.",modelo:"Ex.: First I roll the die. Then I move a counter. Sometimes I miss a turn.",chk:["Usei pelo menos duas expressões (roll the die, move a counter, land, miss a turn)?","Usei o verbo sem -s, porque o sujeito é I?"]},
+   {tag:"apl",q:"Qual palavra ou expressão do livro combina com cada situação? (a) Ele olhou escondido as cartas do colega. (b) Ela achou o jogo difícil demais e parou de jogar. (c) Você precisa descobrir a palavra escrita no cartão da sua testa.",modelo:"(a) cheat (b) give up (c) guess",chk:["Respondi cheat e give up?","Respondi guess?"]}
+  ]
+ },
+ {
+  porto:"Carta 12 · Coringa · Unit 8 · p. 45 (Picture It!)", v:"🃏", s:"", u:"cor",
+  titulo:"Places to Visit: lugares para visitar",
+  texto:[
+   "Na mesma página, a lista <span class='destaque'>Places to Visit</span> mostra lugares para passear. Veja o que cada foto mostra:",
+   "<ul><li>[[art gallery]] — galeria de arte: uma sala com quadros nas paredes e uma escultura no meio.</li><li>[[campground]] — área de camping: barracas no gramado, entre as árvores.</li><li>[[fishing port]] — porto de pesca: barcos parados na água, perto de uma cidade.</li><li>[[market]] — mercado (feira): barracas com objetos à venda.</li><li>[[monument]] — monumento: uma grande escultura de pedra.</li><li>[[safari park]] — parque de safári: animais em campo aberto e um jipe.</li><li>[[statue]] — estátua: uma figura de metal no alto de um prédio.</li><li>[[town square]] — praça da cidade: uma praça grande cercada de prédios antigos, com muita gente.</li><li>[[water park]] — parque aquático: piscinas e tobogãs.</li></ul>",
+   "<div class='olhar'><b>Olhar de prova:</b> repare nas palavras compostas — art <b>gallery</b>, fishing <b>port</b>, safari <b>park</b>, town <b>square</b>, water <b>park</b>. Ler a palavra inteira evita confundir safari park com water park.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Que lugar da lista você visitaria para ver quadros? E para ver animais? E para nadar e descer em tobogãs? Escreva os nomes em inglês.",modelo:"Quadros: art gallery. Animais: safari park. Piscinas e tobogãs: water park.",chk:["Respondi art gallery e safari park?","Respondi water park?"]},
+   {tag:"apl",q:"Escreva uma frase no simple past sobre um lugar da lista que você visitou (use visited + o lugar + uma expressão de passado).",modelo:"Ex.: I visited a water park last week.",chk:["Usei visited (passado regular com -ed)?","Usei um lugar da lista e uma expressão de passado?"]},
+   {tag:"apl",q:"Escreva uma frase com os dois tempos sobre um passeio num lugar da lista: use while + past progressive e um simple past.",modelo:"Ex.: While we were walking in the town square, it started to rain.",chk:["Usei while + was/were + verbo com -ing?","Usei um simple past e um lugar da lista?"]}
+  ]
+ }
+];
+
+/* ====== ESTADO E PERSISTÊNCIA ====== */
+var CHAVE=KIT+'_leitura_v1';
+var mem={};
+var estado=carregar();
+
+function carregar(){
+  try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s); }catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); }
+  return {blocos:{}};
+}
+function calcProgresso(){
+  var conf=0, chkPend=0;
+  BLOCOS.forEach(function(bloco,i){
+    var b=estado.blocos[i]; if(!b||!b.conferido) return; conf++;
+    bloco.perguntas.forEach(function(p,j){ var ep=(b.perguntas&&b.perguntas[j])||{chk:{}}; p.chk.forEach(function(pt,k){ if(!ep.chk||!ep.chk[k]) chkPend++; }); });
+  });
+  estado.progresso={conferidos:conf,total:BLOCOS.length,chkPendentes:chkPend};
+  if(conf===BLOCOS.length && chkPend===0){ if(!estado.concluido){ estado.concluido=true; estado.concluidoEm=new Date().toISOString(); } }
+  return estado.progresso;
+}
+function salvar(){
+  calcProgresso();
+  var s=JSON.stringify(estado);
+  try{ localStorage.setItem(CHAVE,s); }catch(e){ mem[CHAVE]=s; }
+  var d=new Date();
+  document.getElementById('salvo').textContent='💾 Salvo às '+d.toLocaleTimeString('pt-BR')+' de '+d.toLocaleDateString('pt-BR');
+  atualizarTrilhaFim();
+}
+function atualizarTrilhaFim(){
+  var p=estado.progresso||calcProgresso();
+  var box=document.getElementById('trilha-fim'), txt=document.getElementById('trilha-fim-txt'), btn=document.getElementById('btn-prox');
+  var h3=box.querySelector('h3');
+  if(estado.concluido||trilhaLiberada()){
+    h3.textContent='✅ Leitura concluída — Quiz destravado!';
+    txt.textContent=estado.concluido?'Você conferiu as 12 cartas e respondeu a autoavaliação. Agora teste o que aprendeu na Mão Rápida.':'Trilha liberada pelos pais.';
+    btn.classList.remove('off');
+  } else {
+    h3.textContent='🔒 Próxima etapa: Quiz';
+    var faltam=p.total-p.conferidos;
+    txt.textContent=faltam>0 ? 'Destrava quando você conferir as '+p.total+' cartas (faltam '+faltam+').' : 'Falta responder a autoavaliação Sim/Não de '+p.chkPendentes+' ponto(s) para destravar.';
+    btn.classList.add('off');
+  }
+  marcarNav();
+}
+function estBloco(i){ if(!estado.blocos[i]) estado.blocos[i]={aberto:i===0,conferido:false,perguntas:{}}; return estado.blocos[i]; }
+function estPerg(i,j){ var b=estBloco(i); if(!b.perguntas[j]) b.perguntas[j]={resp:'',warned:false,red:false,tentou:'',chk:{}}; return b.perguntas[j]; }
+
+/* ====== ANTICÓPIA (motor validado — Português 7º, 08/10/2026) ====== */
+function normPal(s){
+  return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/<[^>]*>/g,' ').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(Boolean);
+}
+function maiorRun(aw,bw){
+  var bStr=' '+bw.join(' ')+' ', best=0;
+  for(var i=0;i<aw.length;i++){
+    for(var len=aw.length-i; len>0; len--){
+      var sub=aw.slice(i,i+len).join(' ');
+      if(bStr.indexOf(' '+sub+' ')>=0){ if(len>best)best=len; break; }
+    }
+  }
+  return best;
+}
+function cobertoPorRuns(aw,bw,minRun){
+  var bStr=' '+bw.join(' ')+' ', cov=new Array(aw.length).fill(false);
+  for(var i=0;i<aw.length;i++){
+    for(var len=aw.length-i; len>=minRun; len--){
+      var sub=aw.slice(i,i+len).join(' ');
+      if(bStr.indexOf(' '+sub+' ')>=0){ for(var k=i;k<i+len;k++)cov[k]=true; break; }
+    }
+  }
+  return cov.filter(Boolean).length;
+}
+function ehCopia(resp, textoBloco, pergunta){
+  var a=normPal(resp), src=normPal(textoBloco), q=normPal(pergunta);
+  if(a.length<5) return false;
+  var qStr=' '+q.join(' ')+' ', keep=new Array(a.length).fill(true);
+  for(var i=0;i<a.length;i++){
+    for(var len=a.length-i; len>=4; len--){
+      var sub=a.slice(i,i+len).join(' ');
+      if(qStr.indexOf(' '+sub+' ')>=0){ for(var k=i;k<i+len;k++)keep[k]=false; break; }
+    }
+  }
+  var af=a.filter(function(w,idx){return keep[idx];});
+  if(af.length<5) return false;
+  var run=maiorRun(af,src);
+  var cov=cobertoPorRuns(af,src,5);
+  var ratio=cov/af.length;
+  return run>=8 || ratio>0.6;
+}
+
+/* ====== RENDER ====== */
+function textoPlano(bloco){ return bloco.texto.join(' ').replace(/\[\[|\]\]/g,' '); }
+function irBloco(i){ var el=document.getElementById('bloco'+i); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+
+function render(){
+  var cont=document.getElementById('blocos'); cont.innerHTML='';
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i);
+    var div=document.createElement('div'); div.className='bloco '+bloco.u+(b.aberto?'':' travado'); div.id='bloco'+i;
+    var html='<div class="bloco-cab"><div class="minicarta"><span class="v">'+bloco.v+'</span><span class="s">'+bloco.s+'</span></div><div><div class="porto">'+bloco.porto+'</div><h3>'+bloco.titulo+'</h3></div></div>';
+    if(!b.aberto){
+      html+='<div class="cadeado">🔒 Esta carta vira quando você conferir a carta anterior.</div>';
+      div.innerHTML=html; cont.appendChild(div); return;
+    }
+    html+='<div class="bloco-corpo"><div class="texto">';
+    bloco.texto.forEach(function(p){ var t=enHTML(p); html+= (t.indexOf('<div')===0 || t.indexOf('<ul')===0 || t.indexOf('<table')===0 ? t : '<p>'+t+'</p>'); });
+    html+='</div>';
+    bloco.perguntas.forEach(function(p,j){
+      var ep=estPerg(i,j);
+      var tagTxt=p.tag==='conc'?'Conceito':'Aplicação';
+      html+='<div class="perg'+(ep.red?' red':'')+'" id="perg'+i+'_'+j+'">';
+      html+='<span class="tag '+p.tag+'">'+tagTxt+'</span>';
+      html+='<label for="ta'+i+'_'+j+'">'+(j+1)+'. '+p.q+'</label>';
+      html+='<textarea id="ta'+i+'_'+j+'" oninput="digitou('+i+','+j+')"></textarea>';
+      html+='<div class="aviso" id="av'+i+'_'+j+'"></div>';
+      html+='<div class="modelo" id="mod'+i+'_'+j+'"><span class="lab">Resposta-modelo</span><p>'+p.modelo+'</p>';
+      html+='<div class="chk" id="chk'+i+'_'+j+'"></div></div>';
+      html+='</div>';
+    });
+    html+='<button class="conferir" id="conf'+i+'" onclick="conferir('+i+')">✔️ Conferir esta carta</button>';
+    html+='<div class="status-bloco" id="st'+i+'"></div>';
+    if(i<BLOCOS.length-1){ html+='<div class="prox" id="px'+i+'"></div>'; }
+    html+='</div>';
+    div.innerHTML=html;
+    cont.appendChild(div);
+    bloco.perguntas.forEach(function(p,j){ var ta=document.getElementById('ta'+i+'_'+j); if(ta) ta.value=estPerg(i,j).resp||''; });
+  });
+  ligarAudio(cont);
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i);
+    if(b.aberto && b.conferido){ mostrarConferido(i); }
+    atualizarBotao(i);
+  });
+  atualizarRelatorio();
+  atualizarTrilhaFim();
+}
+
+function digitou(i,j){
+  var ep=estPerg(i,j);
+  ep.resp=document.getElementById('ta'+i+'_'+j).value;
+  if(ep.red){
+    var bloco=BLOCOS[i];
+    if(!ehCopia(ep.resp, textoPlano(bloco), bloco.perguntas[j].q)){
+      ep.red=false;
+      var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.remove('red');
+      var av=document.getElementById('av'+i+'_'+j); if(av){av.className='aviso'; av.textContent='';}
+    }
+  }
+  atualizarBotao(i);
+  salvar();
+  atualizarRelatorio();
+}
+
+function atualizarBotao(i){
+  var b=estBloco(i); if(!b.aberto) return;
+  var btn=document.getElementById('conf'+i); if(!btn) return;
+  if(b.conferido){ btn.disabled=true; return; }
+  var todas=true;
+  BLOCOS[i].perguntas.forEach(function(p,j){
+    var v=(document.getElementById('ta'+i+'_'+j)||{}).value||estPerg(i,j).resp||'';
+    if(v.trim().length<3) todas=false;
+  });
+  btn.disabled=!todas;
+}
+
+function conferir(i){
+  var bloco=BLOCOS[i], b=estBloco(i);
+  var algumBloqueado=false;
+  bloco.perguntas.forEach(function(p,j){
+    var ep=estPerg(i,j);
+    ep.resp=document.getElementById('ta'+i+'_'+j).value;
+    var av=document.getElementById('av'+i+'_'+j);
+    var copia=ehCopia(ep.resp, textoPlano(bloco), p.q);
+    if(copia){
+      if(!ep.warned || ep.resp===ep.tentou && !ep.segunda){
+        if(!ep.warned){ ep.warned=true; ep.tentou=ep.resp; }
+        av.className='aviso amarelo';
+        av.innerHTML='✋ Boa parte da sua resposta está igual ao texto. Tente <b>reescrever com as suas palavras</b> — explique como se fosse para um amigo, sem olhar o texto. Pode ficar mais curto e simples: o que vale é ser <b>SEU</b>.';
+        algumBloqueado=true;
+      } else {
+        ep.segunda=true; ep.red=true;
+        av.className='aviso vermelho';
+        av.innerHTML='🔴 Esta resposta continua muito parecida com o texto. Ela foi aceita, mas ficou marcada para revisar. Se reescrever com as suas palavras, a marca some.';
+        document.getElementById('perg'+i+'_'+j).classList.add('red');
+      }
+    } else {
+      ep.red=false;
+      if(av){ av.className='aviso'; av.textContent=''; }
+      var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.remove('red');
+    }
+  });
+  salvar();
+  if(algumBloqueado){
+    document.getElementById('st'+i).innerHTML='<span style="color:var(--ouro)">✍️ Altere as respostas marcadas em amarelo e clique em Conferir de novo.</span>';
+    return;
+  }
+  b.conferido=true;
+  if(i<BLOCOS.length-1){ estBloco(i+1).aberto=true; }
+  salvar();
+  render();
+  var alvo=document.getElementById('bloco'+i);
+  if(alvo) alvo.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function mostrarConferido(i){
+  var bloco=BLOCOS[i];
+  bloco.perguntas.forEach(function(p,j){
+    var ep=estPerg(i,j);
+    var mod=document.getElementById('mod'+i+'_'+j); if(mod) mod.classList.add('show');
+    if(ep.red){ var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.add('red');
+      var av=document.getElementById('av'+i+'_'+j); if(av){av.className='aviso vermelho'; av.innerHTML='🔴 Resposta marcada para revisar (muito parecida com o texto). Reescreva com as suas palavras para tirar a marca.';}
+    }
+    var chk=document.getElementById('chk'+i+'_'+j); if(chk){
+      var h='<b style="font-size:.8rem;color:#8fe0b4">Confira você: a sua resposta…</b>';
+      p.chk.forEach(function(pt,k){
+        var val=ep.chk[k]||'';
+        h+='<div class="item"><span>'+pt+'</span><span class="simnao">'
+         +'<button class="sim'+(val==='sim'?' ativo':'')+'" onclick="marcarChk('+i+','+j+','+k+',\'sim\')">Sim</button>'
+         +'<button class="nao'+(val==='nao'?' ativo':'')+'" onclick="marcarChk('+i+','+j+','+k+',\'nao\')">Não</button>'
+         +'</span></div>';
+      });
+      chk.innerHTML=h;
+    }
+  });
+  atualizarStatusBloco(i);
+  var btn=document.getElementById('conf'+i); if(btn){ btn.textContent='✔️ Carta conferida'; btn.disabled=true; }
+  if(i<BLOCOS.length-1){
+    var px=document.getElementById('px'+i);
+    if(px) px.innerHTML='<a href="#bloco'+(i+1)+'" onclick="irBloco('+(i+1)+');return false;">➡️ Virar a próxima carta</a>';
+  }
+}
+
+function marcarChk(i,j,k,val){
+  var ep=estPerg(i,j); ep.chk[k]=val;
+  salvar(); mostrarConferido(i); atualizarStatusBloco(i); atualizarRelatorio();
+}
+
+function statusPergunta(i,j){
+  var ep=estPerg(i,j), p=BLOCOS[i].perguntas[j];
+  if(ep.red) return 'revisar';
+  var temNao=false, todasResp=true;
+  p.chk.forEach(function(pt,k){ if(ep.chk[k]==='nao') temNao=true; if(!ep.chk[k]) todasResp=false; });
+  if(temNao) return 'revisar';
+  if(!todasResp) return 'pendente';
+  return 'ok';
+}
+function atualizarStatusBloco(i){
+  var st=document.getElementById('st'+i); if(!st) return;
+  var revisar=false, pendente=false;
+  BLOCOS[i].perguntas.forEach(function(p,j){ var s=statusPergunta(i,j); if(s==='revisar')revisar=true; if(s==='pendente')pendente=true; });
+  if(revisar) st.innerHTML='<span style="color:#ffb3b3">🔁 Esta carta tem pontos para revisar.</span>';
+  else if(pendente) st.innerHTML='<span style="color:var(--ouro)">📝 Responda a autoavaliação (Sim/Não) de cada pergunta.</span>';
+  else st.innerHTML='<span style="color:#8fe0b4">✅ Carta concluída com sucesso!</span>';
+  atualizarRelatorio();
+}
+
+function atualizarRelatorio(){
+  var lista=[], totalConf=0, totalRed=0, totalNao=0;
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i); if(!b.conferido) return; totalConf++;
+    bloco.perguntas.forEach(function(p,j){
+      var ep=estPerg(i,j);
+      if(ep.red){ totalRed++; lista.push('Carta '+(i+1)+' ('+bloco.titulo+'): pergunta '+(j+1)+' — resposta muito parecida com o texto.'); }
+      p.chk.forEach(function(pt,k){ if(ep.chk[k]==='nao'){ totalNao++; lista.push('Carta '+(i+1)+' ('+bloco.titulo+'): revisar — "'+pt+'"'); } });
+    });
+  });
+  var rev=document.getElementById('revisar'), rl=document.getElementById('revisar-lista');
+  if(lista.length){ rev.style.display='block'; rl.innerHTML=lista.map(function(x){return '<li>'+x+'</li>';}).join(''); }
+  else { rev.style.display='none'; rl.innerHTML=''; }
+  var rc=document.getElementById('rel-conteudo');
+  rc.innerHTML='<b>Cartas conferidas:</b> '+totalConf+' de '+BLOCOS.length+'.<br>'
+    +'<b>Respostas marcadas (muito parecidas com o texto):</b> '+totalRed+'.<br>'
+    +'<b>Pontos marcados como "Não" na autoavaliação:</b> '+totalNao+'.<br>'
+    +(lista.length? '<span style="color:#ffb3b3">Há '+lista.length+' ponto(s) para revisar (lista acima).</span>' : '<span style="color:#8fe0b4">Sem pontos pendentes para revisar. 👏</span>');
+}
+
+/* ====== EXPORTAR / IMPORTAR / ZERAR ====== */
+function exportar(){
+  var dados=JSON.stringify(estado,null,2);
+  var blob=new Blob([dados],{type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='leitura-guiada_baralho-dos-tempos.json'; a.click();
+}
+function importar(ev){
+  var f=ev.target.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); render(); mostrarModal('✅ Progresso importado!',false); }catch(e){ mostrarModal('❌ Arquivo inválido.',false); } };
+  r.readAsText(f);
+}
+var acaoZerar=null;
+function pedirZerar(){ acaoZerar=true; mostrarModal('Tem certeza que quer apagar TODO o progresso desta leitura? (O Quiz continua destravado se já tiver sido destravado.)',true); }
+function mostrarModal(txt,confirmar){
+  document.getElementById('modal-txt').innerHTML=txt;
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none';
+  document.getElementById('modal-ok').textContent=confirmar?'Sim, apagar':'Ok';
+  document.getElementById('modal-ok').onclick=function(){ if(confirmar && acaoZerar){ var c=estado.concluido, ce=estado.concluidoEm; estado={blocos:{}}; if(c){estado.concluido=true; estado.concluidoEm=ce;} salvar(); render(); } acaoZerar=null; fecharModal(); };
+}
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+ligarAudio(document.querySelector('.peg'));
+render();
+</script>
+</body>
+</html>

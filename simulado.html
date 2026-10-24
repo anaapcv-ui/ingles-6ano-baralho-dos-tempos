@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado · Baralho dos Tempos · Inglês 6º</title>
+<style>
+  :root{--mesa:#0b1d15;--mesa2:#12291f;--borda:#23453a;--borda2:#33604f;--ouro:#f2c14e;--esp:#5aa9ff;--cop:#ff5a78;--pau:#4ade80;--our:#ffa94d;--cor:#c9a2ff;--verde:#4ade80;--vermelho:#ff5d6c;--texto:#eef5ef;--cinza:#93a89c;--marinho:#0e1a33}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:radial-gradient(1000px 520px at 50% -10%,#1c4a35,#0b1d15 62%),var(--mesa);color:var(--texto);line-height:1.6;padding-bottom:60px}
+  h1,h2,h3{font-family:Georgia,'Times New Roman',serif}
+  header{background:linear-gradient(120deg,#0e1a33,#16264a);padding:26px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:5px solid #e23b4e}
+  header .selo{font-size:.78rem;letter-spacing:2px;color:#f6e3a8;text-transform:uppercase}
+  header h1{font-size:1.5rem;margin:6px 0 2px}
+  header p{color:#cfdcf2;font-size:.92rem}
+  .wrap{max-width:820px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--mesa2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--borda)}
+  .barra-nav a.on{background:var(--ouro);color:#2b1d00;font-weight:bold}
+  .intro{background:var(--mesa2);border:1px solid var(--borda);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:var(--ouro);font-size:1.1rem;margin-bottom:8px}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--mesa2);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--mesa);color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .codigo{background:linear-gradient(120deg,#122a1f,#1b4d36);border:2px solid var(--verde);border-radius:14px;padding:16px;text-align:center;margin-bottom:16px;display:none}
+  .codigo.show{display:block}
+  .codigo .cod{font-size:1.8rem;font-weight:bold;letter-spacing:3px;color:#8fe0b4;margin:6px 0}
+  .progresso{height:10px;background:var(--borda);border-radius:6px;overflow:hidden;margin-bottom:16px}
+  .progresso div{height:100%;background:linear-gradient(90deg,#e23b4e,var(--ouro));width:0;transition:width .3s}
+  .q{background:var(--mesa2);border:1px solid var(--borda);border-radius:16px;padding:16px;margin-bottom:14px}
+  .q .num{color:var(--ouro);font-weight:bold;font-size:.8rem;letter-spacing:1px;text-transform:uppercase}
+  .tipo{float:right;font-size:.66rem;font-weight:bold;letter-spacing:1px;text-transform:uppercase;border-radius:12px;padding:3px 9px}
+  .tipo.mc{background:#26385f;color:#9fc2ff}
+  .tipo.fill{background:#2c1d45;color:#d6b3ff}
+  .tipo.reorder{background:#123a2f;color:#8ff0c4}
+  .tipo.rom{background:#4a2a10;color:#ffcf9a}
+  .q h3{font-size:1rem;margin:6px 0 10px;font-weight:600;font-family:'Segoe UI',system-ui,Arial,sans-serif}
+  .en{color:#fff3c4;font-style:italic}
+  .alt{display:block;background:#0f2219;border:1px solid var(--borda2);border-radius:10px;padding:10px 12px;margin:6px 0;cursor:pointer}
+  .alt:hover{border-color:var(--ouro)}
+  .alt input{margin-right:8px}
+  .alt.sel{border-color:var(--ouro);background:#2a2610}
+  .alt.certa{border-color:var(--verde);background:#0e2b1f}
+  .alt.errada{border-color:#555;background:#161c19;color:#aaa}
+  .alt.marcada-errada{border-color:var(--vermelho);background:#3a1414}
+  .afirm{background:#0f2219;border-left:3px solid var(--our);padding:7px 10px;margin:5px 0;border-radius:0 8px 8px 0;font-size:.95rem}
+  .afirm.ok{border-left-color:var(--verde)} .afirm.no{border-left-color:#777}
+  .fill-in{width:100%;background:#081610;border:1.5px solid var(--borda2);border-radius:10px;padding:10px 12px;color:var(--texto);font-size:1rem;font-family:inherit}
+  .fill-in.ok-c{border-color:var(--verde);background:#0e2b1f}
+  .fill-in.no-c{border-color:var(--vermelho);background:#3a1414}
+  .linha{min-height:46px;border:1.5px dashed var(--borda2);border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px;background:#081610}
+  .linha.ok-c{border-color:var(--verde)} .linha.no-c{border-color:var(--vermelho)}
+  .banco{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{background:#173b2e;color:var(--texto);border:1px solid var(--borda2);border-radius:8px;padding:6px 11px;font-size:.95rem}
+  .chip.usado{opacity:.25;pointer-events:none}
+  .vazio{color:var(--cinza);font-size:.85rem;padding:4px}
+  .exp{margin-top:8px;font-size:.88rem;padding:8px 10px;border-radius:8px;background:#0f2219;border-left:3px solid var(--ouro);display:none}
+  .exp.show{display:block}
+  .enviar{width:100%;background:#e23b4e;color:#fff;border:none;border-radius:12px;padding:14px;font-size:1.05rem;font-weight:bold;margin:10px 0}
+  .enviar:disabled{background:#1b3329;color:#6f8a7c;cursor:not-allowed}
+  .gab{background:var(--mesa2);border:1px dashed var(--ouro);border-radius:14px;padding:16px;margin:16px 0;display:none}
+  .gab.show{display:block}
+  .gab input{padding:9px;border-radius:8px;border:1px solid var(--borda2);background:#081610;color:var(--texto);font-size:1rem;width:180px;text-transform:uppercase}
+  .gab button{background:var(--ouro);color:#2b1d00;border:none;border-radius:8px;padding:9px 14px;font-weight:bold;margin-left:6px}
+  .gab .msg{margin-top:8px;font-size:.9rem}
+  .fim{background:linear-gradient(120deg,#122a1f,#163a2a);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .fim h3{color:#8fe0b4;margin-bottom:8px}
+  .fim a{display:inline-block;margin-top:8px;background:var(--verde);color:#04231a;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(5,10,8,.96);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--mesa2);border:1px solid var(--ouro);border-radius:14px;padding:22px;max-width:440px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal .big{font-size:2.2rem}
+  .modal a,.modal button{display:inline-block;background:var(--ouro);color:#2b1d00;border:none;border-radius:8px;padding:10px 18px;font-weight:bold;text-decoration:none}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Baralho dos Tempos · Inglês 6º ano · CCF</div>
+  <h1>📝 Simulado · Partida Valendo</h1>
+  <p>30 questões no estilo da prova · Multiple choice · Fill in the blank · Reorder · Números romanos · Código SIM</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html">🎯 Quiz</a>
+    <a href="resumo.html">🗺️ Resumo</a>
+    <a class="on" href="simulado.html">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="codigo" id="codigo"><div>Seu código de liberação</div><div class="cod" id="cod"></div><div id="codtxt"></div></div>
+
+  <div class="intro">
+    <h2>📝 Valendo!</h2>
+    <p>Faça como se fosse a prova: <b>30 questões</b>, todas obrigatórias, sem áudio e sem consultar. São 4 tipos:</p>
+    <ul style="margin:6px 0 0 20px">
+      <li><b>Multiple choice</b> (18): escolha a alternativa certa.</li>
+      <li><b>Fill in the blank</b> (6): escreva a palavra que falta.</li>
+      <li><b>Reorder</b> (3): toque nas palavras na ordem certa para montar a frase (toque de novo para devolver).</li>
+      <li><b>Números romanos</b> (3): leia as afirmativas I, II, III e IV e escolha a alternativa correta.</li>
+    </ul>
+    <p style="margin-top:6px">Depois de enviar, as respostas travam e sai o código <b>SIM</b>.</p>
+  </div>
+
+  <div class="painel">
+    <span id="salvo">💾 Progresso salvo automaticamente.</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div class="progresso"><div id="barra"></div></div>
+  <div id="questoes"></div>
+  <button class="enviar" id="btn-enviar" onclick="enviar()" disabled>📨 Enviar simulado (responda todas)</button>
+
+  <div class="gab" id="gab">
+    <b>🔑 Gabarito comentado:</b> digite o código SIM que apareceu no topo.<br>
+    <input id="gab-in" placeholder="SIM-XX-YY"><button onclick="abrirGab()">Ver gabarito</button>
+    <div class="msg" id="gab-msg"></div>
+  </div>
+
+  <div class="fim" id="fim" style="display:none">
+    <h3>🏁 Trilha completa!</h3>
+    <p>Você jogou o baralho inteiro, na ordem. Agora tudo fica aberto para revisar quantas vezes quiser até a prova.</p>
+    <a href="index.html">🏠 Voltar ao início</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🃏 Boa prova!</div>
+</div>
+
+<div class="modal-bg" id="lock">
+  <div class="modal">
+    <div class="big">🔒</div>
+    <p><b>Esta etapa ainda está trancada.</b></p>
+    <p id="lock-txt">Para abrir o Simulado, leia o Resumo até o fim.</p>
+    <a href="index.html">Voltar ao início</a>
+  </div>
+</div>
+<div class="modal-bg" id="modal" style="background:rgba(0,0,0,.75)">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button onclick="fecharModal()" id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='baralho_tempos_ing6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function checarTrava(){
+  if(podeAbrir('simulado')) return true;
+  var txt='Para abrir o Simulado, leia o Resumo até o fim e clique em "Li o resumo até o fim".';
+  if(!etapaConcluida('quiz')) txt='Para abrir o Simulado, envie o Quiz e leia o Resumo até o fim.';
+  if(!etapaConcluida('leitura')) txt='Para abrir o Simulado, conclua a Leitura Guiada, envie o Quiz e leia o Resumo até o fim.';
+  document.getElementById('lock-txt').textContent=txt;
+  document.getElementById('lock').classList.add('show');
+  document.querySelector('.wrap').style.filter='blur(6px)';
+  return false;
+}
+
+/* ====== QUESTÕES (só Reference Book pp. 6, 18, 30, 45, 46) — correta guardada pelo id / pelo texto ====== */
+var Q=[
+ /* ---------- MULTIPLE CHOICE (18) ---------- */
+ {tipo:"mc",p:"Qual frase fala de uma <b>rotina</b> (hábito)?",alts:[
+  {id:"a",t:"<span class='en'>I play cards with my friends on Saturdays.</span>",ok:true,e:"On Saturdays = rotina → simple present (p. 46)."},
+  {id:"b",t:"<span class='en'>We're playing cards now.</span>",e:"Now → acontece agora (present progressive)."},
+  {id:"c",t:"<span class='en'>We were playing cards at 7:30pm.</span>",e:"Atividade em andamento no passado (past progressive)."},
+  {id:"d",t:"<span class='en'>Look! She is winning.</span>",e:"Acontece agora (present progressive)."}]},
+ {tipo:"mc",p:"Complete: <span class='en'>Does your sister ___ tennis?</span>",alts:[
+  {id:"a",t:"play",ok:true,e:"Depois de Does o verbo fica na forma base."},
+  {id:"b",t:"plays",e:"O -s não aparece depois de Does."},
+  {id:"c",t:"playing",e:"Does + verbo na forma base, não -ing."},
+  {id:"d",t:"played",e:"Does pede a forma base, não o passado."}]},
+ {tipo:"mc",p:"Escolha a negativa correta de <span class='en'>He cheats.</span>",alts:[
+  {id:"a",t:"<span class='en'>He doesn't cheat.</span>",ok:true,e:"He → doesn't + verbo sem -s (frase da p. 46)."},
+  {id:"b",t:"<span class='en'>He don't cheat.</span>",e:"Don't é para I, you, we, they."},
+  {id:"c",t:"<span class='en'>He doesn't cheats.</span>",e:"Depois de doesn't o verbo fica sem -s."},
+  {id:"d",t:"<span class='en'>He isn't cheat.</span>",e:"A negativa do simple present usa doesn't, não isn't."}]},
+ {tipo:"mc",p:"Qual sequência está na ordem do livro, do <b>100%</b> ao <b>0%</b>?",alts:[
+  {id:"a",t:"always · usually · often · sometimes · hardly ever · never",ok:true,e:"É a escala da p. 6."},
+  {id:"b",t:"always · often · usually · sometimes · never · hardly ever",e:"Usually vem antes de often, e hardly ever vem antes de never."},
+  {id:"c",t:"usually · always · often · sometimes · hardly ever · never",e:"Always (100%) é o primeiro."},
+  {id:"d",t:"never · hardly ever · sometimes · often · usually · always",e:"Essa está do 0% para o 100% — ao contrário."}]},
+ {tipo:"mc",p:"Onde fica o <span class='en'>never</span>? Escolha a frase correta.",alts:[
+  {id:"a",t:"<span class='en'>She is never late.</span>",ok:true,e:"Com o verbo to be (is), o advérbio vem depois dele."},
+  {id:"b",t:"<span class='en'>She never is late.</span>",e:"Com to be, o advérbio vem depois: is never."},
+  {id:"c",t:"<span class='en'>She is late never.</span>",e:"O advérbio não vai para o fim da frase."},
+  {id:"d",t:"<span class='en'>Never she is late.</span>",e:"O advérbio vem depois do verbo to be."}]},
+ {tipo:"mc",p:"Segundo o livro (p. 6), as <b>time expressions</b> como <span class='en'>once a week</span> e <span class='en'>every day</span>:",alts:[
+  {id:"a",t:"geralmente ficam no fim da frase, mas também podem ir no começo.",ok:true,e:"Ex.: We usually chat online twice a week. / On Mondays I do volunteer work."},
+  {id:"b",t:"só podem ficar no começo da frase.",e:"Elas geralmente ficam no fim (e podem ir no começo)."},
+  {id:"c",t:"ficam sempre entre o sujeito e o verbo.",e:"Esse é o lugar dos adverbs of frequency, não das time expressions."},
+  {id:"d",t:"nunca são usadas com o present progressive.",e:"O livro diz que são usadas com o simple present E com o present progressive."}]},
+ {tipo:"mc",p:"Escolha a negativa correta de <span class='en'>They are drawing.</span>",alts:[
+  {id:"a",t:"<span class='en'>They aren't drawing.</span>",ok:true,e:"They → aren't + verbo -ing."},
+  {id:"b",t:"<span class='en'>They don't drawing.</span>",e:"Present progressive usa be + not, não don't."},
+  {id:"c",t:"<span class='en'>They isn't drawing.</span>",e:"Isn't é para he, she, it."},
+  {id:"d",t:"<span class='en'>They aren't draw.</span>",e:"Falta o -ing: drawing."}]},
+ {tipo:"mc",p:"<span class='en'>Is he drawing?</span> Qual é a resposta curta negativa?",alts:[
+  {id:"a",t:"<span class='en'>No, he isn't.</span>",ok:true,e:"A pergunta usa is → No, he isn't."},
+  {id:"b",t:"<span class='en'>No, he doesn't.</span>",e:"Doesn't é resposta para perguntas com Does."},
+  {id:"c",t:"<span class='en'>No, he aren't.</span>",e:"Com he usamos isn't."},
+  {id:"d",t:"<span class='en'>No, he wasn't.</span>",e:"Wasn't é passado; a pergunta está no presente."}]},
+ {tipo:"mc",p:"Complete: <span class='en'>You are reading a good book ___.</span>",alts:[
+  {id:"a",t:"at the moment",ok:true,e:"Present progressive + at the moment (exemplo da p. 46)."},
+  {id:"b",t:"yesterday",e:"Yesterday é pista de passado."},
+  {id:"c",t:"in 1989",e:"In + ano é pista de simple past."},
+  {id:"d",t:"last week",e:"Last week é pista de simple past."}]},
+ {tipo:"mc",p:"Complete: <span class='en'>They're interested in ___ books.</span>",alts:[
+  {id:"a",t:"reading",ok:true,e:"Depois da preposição (in) vem o gerund (-ing)."},
+  {id:"b",t:"read",e:"Depois de preposição o verbo vai para -ing."},
+  {id:"c",t:"reads",e:"Depois de preposição não usamos verbo com -s."},
+  {id:"d",t:"to reads",e:"Forma errada; o livro usa o gerund: reading."}]},
+ {tipo:"mc",p:"Na frase <span class='en'>She hates going skydiving.</span>, a palavra <span class='en'>going</span> é:",alts:[
+  {id:"a",t:"um gerund depois de um verbo de não gostar (hates).",ok:true,e:"Gerund depois de preference verb (p. 6)."},
+  {id:"b",t:"present progressive.",e:"Não há am/is/are antes de going; o verbo principal é hates."},
+  {id:"c",t:"simple past.",e:"Simple past de verbo regular termina em -ed."},
+  {id:"d",t:"past progressive.",e:"Não há was/were antes de going."}]},
+ {tipo:"mc",p:"Qual é o simple past de <span class='en'>arrive</span>?",alts:[
+  {id:"a",t:"arrived",ok:true,e:"Terminado em -e: só + d."},
+  {id:"b",t:"arriveed",e:"Não se põe -ed inteiro: só -d."},
+  {id:"c",t:"arrivied",e:"-ied é para consoante + y (study → studied)."},
+  {id:"d",t:"arrivved",e:"Não se dobra consoante aqui."}]},
+ {tipo:"mc",p:"Qual regra da p. 18 explica <span class='en'>permit → permitted</span>?",alts:[
+  {id:"a",t:"Vogal tônica + consoante: dobra a última consoante e põe -ed.",ok:true,e:"Como stop → stopped."},
+  {id:"b",t:"Consoante + y: tira o y e põe -ied.",e:"Essa é a regra de study → studied."},
+  {id:"c",t:"Terminado em -e: põe só -d.",e:"Essa é a regra de arrive → arrived."},
+  {id:"d",t:"A maioria dos verbos: põe só -ed.",e:"Essa é a regra de invent → invented; permit dobra o t."}]},
+ {tipo:"mc",p:"Escolha a negativa correta no simple past:",alts:[
+  {id:"a",t:"<span class='en'>He didn't play Go.</span>",ok:true,e:"Didn't + verbo na forma base (quadro da p. 46)."},
+  {id:"b",t:"<span class='en'>He didn't played Go.</span>",e:"Depois de didn't o verbo fica na forma base."},
+  {id:"c",t:"<span class='en'>He doesn't played Go.</span>",e:"Doesn't é presente, e o verbo não leva -ed."},
+  {id:"d",t:"<span class='en'>He wasn't play Go.</span>",e:"A negativa do simple past usa didn't."}]},
+ {tipo:"mc",p:"Qual pergunta no simple past está correta?",alts:[
+  {id:"a",t:"<span class='en'>Did she win?</span>",ok:true,e:"Did + sujeito + verbo na forma base (p. 46)."},
+  {id:"b",t:"<span class='en'>Did she won?</span>",e:"Depois de Did o verbo fica na forma base."},
+  {id:"c",t:"<span class='en'>Does she won?</span>",e:"Does é presente e won não é forma base."},
+  {id:"d",t:"<span class='en'>Was she win?</span>",e:"A pergunta do simple past usa Did."}]},
+ {tipo:"mc",p:"Complete: <span class='en'>She ___ listening to music at 9pm on Monday.</span>",alts:[
+  {id:"a",t:"was",ok:true,e:"She → was + verbo -ing."},
+  {id:"b",t:"were",e:"Were é para you, we, they."},
+  {id:"c",t:"did",e:"Did não forma o past progressive."},
+  {id:"d",t:"does",e:"Does é do simple present e não vem antes de -ing."}]},
+ {tipo:"mc",p:"Complete: <span class='en'>I was running to catch the bus ___ I fell.</span>",alts:[
+  {id:"a",t:"when",ok:true,e:"When vem antes do simple past (fell), a ação que interrompeu (p. 30)."},
+  {id:"b",t:"while",e:"While vem antes do past progressive, não do simple past."},
+  {id:"c",t:"did",e:"Did não liga as duas partes da frase."},
+  {id:"d",t:"was",e:"Was não liga as duas partes da frase."}]},
+ {tipo:"mc",p:"Na p. 45, um lugar com barracas montadas no gramado, entre as árvores, é um(a):",alts:[
+  {id:"a",t:"<span class='en'>campground</span>",ok:true,e:"Campground = área de camping."},
+  {id:"b",t:"<span class='en'>town square</span>",e:"Town square = praça da cidade."},
+  {id:"c",t:"<span class='en'>market</span>",e:"Market = mercado/feira (barracas com objetos à venda, não barracas de dormir)."},
+  {id:"d",t:"<span class='en'>art gallery</span>",e:"Art gallery = galeria de arte."}]},
+ /* ---------- FILL IN THE BLANK (6) ---------- */
+ {tipo:"fill",p:"Complete com o simple present do verbo entre parênteses: <span class='en'>My friend ___ (play) cards on the weekend.</span>",aceitas:["plays"],correta:"plays",e:"My friend = he/she → verbo + -s."},
+ {tipo:"fill",p:"Escreva o simple past de <span class='en'>study</span>:",aceitas:["studied"],correta:"studied",e:"Consoante + y: tira o y e põe -ied."},
+ {tipo:"fill",p:"Escreva o simple past de <span class='en'>stop</span>:",aceitas:["stopped"],correta:"stopped",e:"Vogal tônica + consoante: dobra o p e põe -ed."},
+ {tipo:"fill",p:"Complete com <b>was</b> ou <b>were</b>: <span class='en'>They ___ walking to school at 7:30 this morning.</span>",aceitas:["were"],correta:"were",e:"They → were (frase da p. 30)."},
+ {tipo:"fill",p:"Complete com o advérbio de frequência que vale <b>100%</b>: <span class='en'>We ___ study hard.</span>",aceitas:["always"],correta:"always",e:"Always = 100% (escala da p. 6)."},
+ {tipo:"fill",p:"Escreva a expressão de Playing Games (p. 45) que quer dizer <b>desistir</b> (2 palavras):",aceitas:["give up"],correta:"give up",e:"Give up = desistir (foto do homem com as mãos na cabeça)."},
+ /* ---------- REORDER (3) ---------- */
+ {tipo:"reorder",p:"Monte a frase negativa no simple present:",pecas:["She","doesn't","play","tennis."],aceitas:["She doesn't play tennis."],e:"Sujeito + doesn't + verbo na forma base + complemento."},
+ {tipo:"reorder",p:"Monte a pergunta no past progressive:",pecas:["What","were","you","doing","at 9pm","on Monday?"],aceitas:["What were you doing at 9pm on Monday?"],e:"Na pergunta, were vem antes do sujeito (you) — frase da p. 30."},
+ {tipo:"reorder",p:"Monte a frase com while + past progressive no começo:",pecas:["While","we","were","playing cards,","our teacher","arrived."],aceitas:["While we were playing cards, our teacher arrived."],e:"While + past progressive (we were playing cards), depois o simple past (our teacher arrived) — p. 46."},
+ /* ---------- NÚMEROS ROMANOS (3) ---------- */
+ {tipo:"rom",p:"Analise as afirmativas sobre o SIMPLE PRESENT e o PRESENT PROGRESSIVE:",itens:[
+  {n:"I",t:"Usamos o simple present para hábitos e rotinas.",ok:true,e:"Correta (p. 6 e p. 46)."},
+  {n:"II",t:"Com he, she ou it, o verbo no simple present ganha -s ou -es.",ok:true,e:"Correta: He plays tennis."},
+  {n:"III",t:"Na negativa com he/she/it usamos doesn't + verbo com -s (He doesn't plays).",e:"Errada: depois de doesn't o verbo fica sem -s."},
+  {n:"IV",t:"O present progressive é formado por be + verbo + -ing.",ok:true,e:"Correta: I'm drawing."}],
+  alts:[{id:"a",t:"Apenas I, II e IV.",ok:true,e:"Só a III está errada."},{id:"b",t:"Apenas I e III.",e:"A III é errada e faltaram II e IV."},{id:"c",t:"Apenas II, III e IV.",e:"A III é errada e faltou a I."},{id:"d",t:"Todas as afirmativas.",e:"A III é errada."}]},
+ {tipo:"rom",p:"Analise o SIMPLE PAST (spelling) dos verbos regulares:",itens:[
+  {n:"I",t:"invent → invented (a maioria dos verbos: + -ed).",ok:true,e:"Correta (p. 18)."},
+  {n:"II",t:"study → studyed.",e:"Errada: o certo é studied."},
+  {n:"III",t:"arrive → arrived (terminados em -e: + -d).",ok:true,e:"Correta (p. 18)."},
+  {n:"IV",t:"stop → stoped.",e:"Errada: o certo é stopped (dobra o p)."}],
+  alts:[{id:"a",t:"Apenas I e III.",ok:true,e:"I e III estão certas; II e IV estão erradas."},{id:"b",t:"Apenas I, II e III.",e:"A II é errada."},{id:"c",t:"Apenas II e IV.",e:"Essas são justamente as erradas."},{id:"d",t:"Apenas I, III e IV.",e:"A IV é errada."}]},
+ {tipo:"rom",p:"Analise as afirmativas sobre o PAST PROGRESSIVE:",itens:[
+  {n:"I",t:"A forma do past progressive é sujeito + was/were + verbo + -ing.",ok:true,e:"Correta (p. 30)."},
+  {n:"II",t:"Usamos were com I, he, she e it.",e:"Errada: com I, he, she e it usamos was."},
+  {n:"III",t:"Em “I was running to catch the bus when I fell”, o simple past (fell) mostra a ação que interrompeu a atividade.",ok:true,e:"Correta (p. 30)."},
+  {n:"IV",t:"Normalmente usamos while antes do past progressive.",ok:true,e:"Correta (p. 30 e p. 46)."}],
+  alts:[{id:"a",t:"Apenas I, III e IV.",ok:true,e:"Só a II está errada."},{id:"b",t:"Apenas I e II.",e:"A II é errada."},{id:"c",t:"Apenas II e III.",e:"A II é errada e faltaram I e IV."},{id:"d",t:"Todas as afirmativas.",e:"A II é errada."}]}
+];
+
+/* ====== EMBARALHAMENTO COM SEMENTE FIXA (mulberry32) — correta guardada pelo id ====== */
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+var rnd=mulberry32(271026618);
+function embaralhar(arr){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var tmp=a[i]; a[i]=a[j]; a[j]=tmp; } return a; }
+Q.forEach(function(q){
+  if(q.alts){ q.ordem=embaralhar(q.alts); }
+  if(q.tipo==='reorder'){ var idx=q.pecas.map(function(_,k){return k;}); var o; var tent=0; do{ o=embaralhar(idx); tent++; }while(o.join(',')===idx.join(',') && tent<20); q.banco=o; }
+});
+var OBJ=Q.length;
+
+/* ====== ESTADO ====== */
+var CHAVE=KIT+'_simulado_v1'; var mem={}; var estado=carregar();
+function carregar(){ try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s);}catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); } return {resp:{},enviado:false}; }
+function salvar(){ var s=JSON.stringify(estado); try{ localStorage.setItem(CHAVE,s);}catch(e){ mem[CHAVE]=s; } var d=new Date(); document.getElementById('salvo').textContent='💾 Salvo às '+d.toLocaleTimeString('pt-BR')+' de '+d.toLocaleDateString('pt-BR'); }
+var LETRAS='ABCDEFGHJKLMNPQRSTUVWXYZ';
+function gerarCodigo(ac){ var xx=(ac<10?'0':'')+ac; var yy=LETRAS[Math.floor(Math.random()*LETRAS.length)]+LETRAS[Math.floor(Math.random()*LETRAS.length)]; return 'SIM-'+xx+'-'+yy; }
+function norm(s){ return (s||'').toLowerCase().replace(/[’‘`]/g,"'").replace(/\s+/g,' ').replace(/[.!?]+$/,'').trim(); }
+function textoReorder(q,arr){ return (arr||[]).map(function(k){return q.pecas[k];}).join(' '); }
+function respondida(i){ var q=Q[i], r=estado.resp[i]; if(q.tipo==='reorder') return !!(r&&r.length===q.pecas.length); if(q.tipo==='fill') return !!(r&&r.trim().length>0); return !(r===undefined||r===null||r===''); }
+function acertou(i){
+  var q=Q[i], r=estado.resp[i];
+  if(q.tipo==='fill') return q.aceitas.some(function(a){ return norm(a)===norm(r); });
+  if(q.tipo==='reorder') return q.aceitas.some(function(a){ return norm(a)===norm(textoReorder(q,r)); });
+  var a=q.alts.filter(function(x){return x.id===r;})[0]; return !!(a&&a.ok);
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+
+function render(){
+  var c=document.getElementById('questoes'); var h=''; var G=estado.gabarito; var T=estado.enviado;
+  Q.forEach(function(q,i){
+    var tipoTxt={mc:'Multiple choice',fill:'Fill in the blank',reorder:'Reorder',rom:'Números romanos'}[q.tipo];
+    h+='<div class="q" id="q'+i+'"><span class="tipo '+q.tipo+'">'+tipoTxt+'</span><div class="num">Questão '+(i+1)+' de '+Q.length+'</div><h3>'+q.p+'</h3>';
+    if(q.tipo==='rom'){
+      q.itens.forEach(function(it){ var cls='afirm'+(G?(it.ok?' ok':' no'):''); h+='<div class="'+cls+'">'+it.n+'. '+it.t+(G?'<div class="exp show">'+(it.ok?'✅ ':'❌ ')+it.e+'</div>':'')+'</div>'; });
+    }
+    if(q.tipo==='mc'||q.tipo==='rom'){
+      q.ordem.forEach(function(a,k){
+        var letra='abcd'[k]; var sel=estado.resp[i]===a.id; var cls='alt'+(sel?' sel':'');
+        if(G){ if(a.ok) cls+=' certa'; else if(sel) cls+=' marcada-errada'; else cls+=' errada'; }
+        h+='<label class="'+cls+'"><input type="radio" name="q'+i+'" value="'+a.id+'" '+(sel?'checked':'')+' '+(T?'disabled':'')+' onchange="marcar('+i+',\''+a.id+'\')"> <b>'+letra+')</b> '+a.t+(G?'<div class="exp show">'+(a.ok?'✅ ':'')+a.e+'</div>':'')+'</label>';
+      });
+    }
+    if(q.tipo==='fill'){
+      var v=estado.resp[i]||''; var cls='fill-in'+(G?(acertou(i)?' ok-c':' no-c'):'');
+      h+='<input class="'+cls+'" id="f'+i+'" value="'+esc(v)+'" '+(T?'disabled':'')+' placeholder="Escreva aqui" oninput="escreveu('+i+')" autocomplete="off" autocapitalize="off" spellcheck="false">';
+      if(G) h+='<div class="exp show">'+(acertou(i)?'✅ ':'❌ ')+'Resposta: <b>'+q.correta+'</b>. '+q.e+'</div>';
+    }
+    if(q.tipo==='reorder'){
+      var arr=estado.resp[i]||[]; var cls2='linha'+(G?(acertou(i)?' ok-c':' no-c'):'');
+      h+='<div class="'+cls2+'">';
+      if(!arr.length) h+='<span class="vazio">Toque nas palavras abaixo, na ordem certa.</span>';
+      arr.forEach(function(k,pos){ h+='<button class="chip" '+(T?'disabled':'')+' onclick="devolver('+i+','+pos+')">'+q.pecas[k]+'</button>'; });
+      h+='</div><div class="banco">';
+      q.banco.forEach(function(k){ var usado=arr.indexOf(k)>=0; h+='<button class="chip'+(usado?' usado':'')+'" '+(T?'disabled':'')+' onclick="pegar('+i+','+k+')">'+q.pecas[k]+'</button>'; });
+      h+='</div>';
+      if(G) h+='<div class="exp show">'+(acertou(i)?'✅ ':'❌ ')+'Frase certa: <b>'+q.aceitas[0]+'</b> '+q.e+'</div>';
+    }
+    h+='</div>';
+  });
+  c.innerHTML=h; atualizarBarra(); if(T) mostrarEnviado();
+}
+function marcar(i,v){ if(estado.enviado) return; estado.resp[i]=v; salvar(); var q=document.getElementById('q'+i); var labs=q.querySelectorAll('.alt'); for(var k=0;k<labs.length;k++){ labs[k].classList.toggle('sel', labs[k].querySelector('input').value===v); } atualizarBarra(); }
+function escreveu(i){ if(estado.enviado) return; estado.resp[i]=document.getElementById('f'+i).value; salvar(); atualizarBarra(); }
+function pegar(i,k){ if(estado.enviado) return; var arr=estado.resp[i]||[]; if(arr.indexOf(k)>=0) return; arr.push(k); estado.resp[i]=arr; salvar(); render(); var el=document.getElementById('q'+i); }
+function devolver(i,pos){ if(estado.enviado) return; var arr=estado.resp[i]||[]; arr.splice(pos,1); estado.resp[i]=arr; salvar(); render(); }
+function atualizarBarra(){ var n=0; Q.forEach(function(q,i){ if(respondida(i)) n++; }); document.getElementById('barra').style.width=(n/Q.length*100)+'%'; var b=document.getElementById('btn-enviar'); if(!estado.enviado){ b.disabled=n<Q.length; b.textContent=n<Q.length?'📨 Enviar simulado ('+n+' de '+Q.length+' respondidas)':'📨 Enviar simulado'; } }
+function enviar(){
+  if(estado.enviado) return;
+  var ac=0, porTipo={mc:[0,0],fill:[0,0],reorder:[0,0],rom:[0,0]};
+  Q.forEach(function(q,i){ var ok=acertou(i); if(ok) ac++; porTipo[q.tipo][1]++; if(ok) porTipo[q.tipo][0]++; });
+  estado.acertos=ac; estado.objetivas=OBJ; estado.porTipo=porTipo; estado.codigo=gerarCodigo(ac); estado.enviado=true; estado.concluido=true; estado.concluidoEm=new Date().toISOString();
+  salvar(); render(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function mostrarEnviado(){
+  var b=document.getElementById('btn-enviar'); b.disabled=true; b.textContent='✅ Simulado enviado — respostas travadas';
+  document.getElementById('codigo').classList.add('show'); document.getElementById('cod').textContent=estado.codigo;
+  document.getElementById('codtxt').textContent='Anote este código para os pais. Ele abre o gabarito comentado.';
+  document.getElementById('gab').classList.add('show'); document.getElementById('fim').style.display='block';
+}
+function abrirGab(){ var v=document.getElementById('gab-in').value.trim().toUpperCase(); var m=document.getElementById('gab-msg'); if(estado.enviado&&(v===estado.codigo||v==='PAIS-77')){ estado.gabarito=true; salvar(); render(); document.getElementById('gab-msg').innerHTML='<span style="color:#8fe0b4">Gabarito liberado: '+estado.acertos+' acertos de '+OBJ+' questões.</span>'; } else { m.innerHTML='<span style="color:#ffb3b3">Código incorreto.</span>'; } }
+function exportar(){ var blob=new Blob([JSON.stringify(estado,null,2)],{type:'application/json'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='simulado_baralho-dos-tempos.json'; a.click(); }
+function importar(ev){ var f=ev.target.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); render(); mostrarModal('✅ Progresso importado!',false);}catch(e){ mostrarModal('❌ Arquivo inválido.',false);} }; r.readAsText(f); }
+var acaoZerar=null;
+function pedirZerar(){ acaoZerar=true; mostrarModal('Apagar as respostas deste Simulado? (Se ele já foi enviado, o código e a conclusão são mantidos.)',true); }
+function mostrarModal(txt,confirmar){ document.getElementById('modal-txt').innerHTML=txt; document.getElementById('modal').classList.add('show'); document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none'; document.getElementById('modal-ok').textContent=confirmar?'Sim, apagar':'Ok';
+  document.getElementById('modal-ok').onclick=function(){ if(confirmar&&acaoZerar){ if(!estado.enviado){ estado={resp:{},enviado:false}; salvar(); render(); } else { acaoZerar=null; mostrarModal('O Simulado já foi enviado: as respostas ficam travadas. Para refazer do zero, use "Zerar o kit inteiro" no Início.',false); return; } } acaoZerar=null; fecharModal(); }; }
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+if(checarTrava()){ render(); }
+</script>
+</body>
+</html>
